@@ -9,6 +9,11 @@
 		<link rel="stylesheet" href="styles.css">
 		<script src="app.js" type="module"></script>
 	</head>
+	<style>
+		.hide {
+			display : none;
+		}
+	</style>
 <body>
 	<header class="app-header">
 		<div class="navbar">
@@ -52,8 +57,157 @@
 			</div>
 		</div>
 
-		<div class="display-menu">
-			
+		<div class="hide display-menu">
+			<div class="container">
+				<div class="recepy-card menu-card">
+					<h2 class="title"> Please select a recepy</h2>
+					<div class="menu-container">
+						<div class="box">
+							<i class="fa fa-lemon-o" aria-hidden="true"></i>
+							<div class="level">
+								<div id="less-l" class="less less-l">-</div>
+								<div class="qty qty-l">0</div>
+								<div id="more-l" class="more more-l">+</div>
+							</div>
+						</div>
+						<div class="box">
+							<i class="fa fa-spoon" aria-hidden="true"></i>
+							<div class="level">
+								<div id="less-s" class="less less-s">-</div>
+								<div class="qty qty-s">0</div>
+								<div id="more-s" class="more more-s">+</div>
+							</div>
+						</div>
+						<div class="box">
+							<i class="fa fa-cubes" aria-hidden="true"></i>
+							<div class="level">
+								<div id="less-i" class="less less-i">-</div>
+								<div class="qty qty-i">0</div>
+								<div id="more-i" class="more more-i">+</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="store-card menu-card">
+
+					<h2 class="title">Store</h2>
+
+					<div class="menu-container">
+
+						<div class="product-card">
+
+							<div class="size-box">
+								<i id="l-small" class="fa fa-lemon-o p-small" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+							<div class="size-box">
+								<i id="l-medium" class="fa fa-lemon-o p-medium" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+							<div class="size-box">
+								<i id="l-big" class="fa fa-lemon-o p-big" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+						</div>
+
+						<div class="product-card">
+
+							<div class="size-box">
+								<i id="s-small" class="fa fa-spoon p-small" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+							<div class="size-box">
+								<i id="s-medium" class="fa fa-spoon p-medium" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+							<div class="size-box">
+								<i id="s-big" class="fa fa-spoon p-big" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+						</div>
+
+						<div class="product-card">
+
+							<div class="size-box">
+								<i id="i-small" class="fa fa-cubes p-small" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+								
+							<div class="size-box">
+								<i id="i-medium" class="fa fa-cubes p-medium" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+								
+							<div class="size-box">
+								<i id="i-big" class="fa fa-cubes p-big" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+						</div>
+
+						<div class="product-card">
+
+							<div class="size-box">
+								<i id="g-small" class="fa fa-glass p-small" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+								
+							<div class="size-box">
+								<i id="g-medium" class="fa fa-glass p-medium" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+								
+							<div class="size-box">
+								<i id="g-big" class="fa fa-glass p-big" aria-hidden="true"></i>
+								<span>x</span><span class="size-qty"></span>
+								<span>$</span><span class="product-price"></span>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="cart-card menu-card">
+					<h2 class="title">Cart (<span class="cart_total_title">0</span>/10)</h2>
+					<div class="titles">
+						<span class="cart-list-title">Product</span>
+						<span class="cart-list-title">Size</span>
+						<span class="cart-list-title">Price</span>
+					</div>
+					<div class="cart-list">
+						<div class="cart-item-list cart_products">
+						</div>
+						<div class="cart-item-list cart_sizes">
+						</div>
+						<div class="cart-item-list cart_price">
+						</div>
+					</div>
+					<div class="totals">
+						<span class="cart_total">$</span><span class="digit">0</span>
+						<div class="clean_cart">Clean Cart 🗑️</div>
+						<div class="buy">Buy</div>
+					</div>
+				</div>
+				<div class="start">START</div>
+			</div>
 		</div>
 
 		<div class="display-game">
