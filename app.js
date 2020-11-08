@@ -17,19 +17,47 @@ let functions = {
 
 /////////////////////////////////////////////////////////
 
+class Client {
+	constructor(age,money,patience){
+		this.age     = age
+		this.money   = money
+		this.patience= patience
+	}
+	createClient(age,money,patience) {
+		this.age     = age
+		this.money   = money
+		this.patience= patience
+		this.clients_length = functions.anyNumber(20)
+		console.log(this.clients_length)
+	}
+}
+
+/////////////////////////////////////////////////////////
+
+class Match extends Client {
+	constructor() {
+		super()
+	}
+	newMatch(){
+
+	}
+}
+
+/////////////////////////////////////////////////////////
+
 class Product {
 	constructor(name,size,price,alias){
-		this.name                                             = name
-		this.size                                             = size
-		this.price                                            = price
-		this.alias                                            = alias
+		this.name = name
+		this.size = size
+		this.price= price
+		this.alias= alias
 	}
 
 	createProduct(name,size,price,alias){
-		this.name                                             = name
-		this.size                                             = size
-		this.price                                            = price
-		this.alias                                            = alias
+		this.name = name
+		this.size = size
+		this.price= price
+		this.alias= alias
 		return [this.name,this.size,this.price,this.alias]
 	}
 }
@@ -39,11 +67,10 @@ class Product {
 class Cart {
 	constructor() {
 		this.cart_products   = []
-		this.total_cart_price     = 0
+		this.total_cart_price= 0
 	}
 
 	addProduct(name,size,price) {
-
 		this.new_cart_product = new Product(name,size,price)
 		/**
 		 * Limit the cart Items
@@ -57,7 +84,6 @@ class Cart {
 	}
 
 	pushProduct(product) {
-
 		this.cart_products.push(product);
 		this.total_cart_price += product.price;
 		/**
@@ -102,6 +128,38 @@ class Cart {
 		session.cart.total_cart_price             = 0
 	}
 
+	buyCart() {
+		this.get_lemon         = session.cart.cart_products.filter(item => item.name === "lemon")
+		this.get_sugar         = session.cart.cart_products.filter(item => item.name === "sugar")
+		this.get_ice           = session.cart.cart_products.filter(item => item.name === "ice")
+		this.get_glass         = session.cart.cart_products.filter(item => item.name === "glass")
+		this.lemon_total       = 0
+		this.sugar_total       = 0
+		this.ice_total         = 0
+		this.glass_total       = 0
+
+		for(let i              = 0; i < this.get_lemon.length; i++){
+			this.lemon_total += this.get_lemon[i].size
+		}
+		for(let i              = 0; i < this.get_sugar.length; i++){
+			this.sugar_total  += this.get_sugar[i].size
+		}
+		for(let i              = 0; i < this.get_ice.length; i++){
+			this.ice_total    += this.get_ice[i].size
+		}
+		for(let i              = 0; i < this.get_glass.length; i++){
+			this.glass_total  += this.get_glass[i].size
+		}
+		
+		if(session.session_info.money < session.cart.total_cart_price) {
+			alert("Not enought Money")
+			return
+		}else {
+			session.session_info.money = session.session_info.money - session.cart.total_cart_price
+		}
+
+		session.updateInventory(this.lemon_total,this.sugar_total,this.ice_total,this.glass_total)
+	}
 }
 
 /////////////////////////////////////////////////////////
@@ -123,6 +181,9 @@ class Storage {
 		return [this.lemon,this.sugar,this.ice,this.glasses,this.alias]
 	}
 }
+
+/////////////////////////////////////////////////////////
+
 
 class GameListeners {
 	constructor(){}
@@ -173,6 +234,7 @@ class GameListeners {
 		 * Cart Listeners
 		 */
 		document.querySelector('.clean_cart').addEventListener('click', this.cart.cleanCart)
+		document.querySelector('.buy').addEventListener('click', this.cart.buyCart)
 		/*
 		 *Lemons
 		 */
@@ -242,6 +304,14 @@ class SessionProcess extends GameListeners {
 		 * Declare cart
 		 */
 		this.cart                  = new Cart()
+		/*
+		 * Declare match
+		 */
+		this.match                 = new Match()
+		/*
+		 * Declare clients array
+		 */
+		this.clients_array         = []
 		/*
 		 * Declare session info
 		 */
@@ -524,7 +594,7 @@ class SessionProcess extends GameListeners {
 		 * glasses
 		 */
 		else if(this.product===`g`){
-			this.product = `glasses`
+			this.product = `glass`
 			if(this.size==='small') { this.size=session.products[9][1];this.price=session.products[9][2]}
 			if(this.size==='medium'){ this.size=session.products[10][1];this.price=session.products[10][2]}
 			if(this.size==='big')   { this.size=session.products[11][1];this.price=session.products[11][2]}
@@ -532,7 +602,6 @@ class SessionProcess extends GameListeners {
 		/*
 		 * Add to Cart
 		 */
-		// this.product = new Product(this.product,this.size,this.price)
 		session.cart.addProduct(this.product,this.size,this.price)
 		return
 	}
@@ -540,6 +609,24 @@ class SessionProcess extends GameListeners {
 	 * Update Stats Bar
 	 */
 	updateBar() {
+		/*
+		 *limit the totals
+		 */
+		if (this.session_info.inventory.lemon > this.session_info.storage.lemon) {
+			this.session_info.inventory.lemon = this.session_info.storage.lemon
+		}
+		else if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
+			this.session_info.inventory.sugar = this.session_info.storage.sugar
+		}
+		else if (this.session_info.inventory.ice > this.session_info.storage.ice) {
+			this.session_info.inventory.ice = this.session_info.storage.ice
+		}
+		else if (this.session_info.inventory.glass > this.session_info.storage.glass) {
+			this.session_info.inventory.glass = this.session_info.storage.glass
+		}
+		/*
+		 * update bar
+		 */
 		document.getElementById("Lemons-bar").innerHTML = Number(this.session_info.inventory.lemon)
 		document.getElementById("Sugar-bar").innerHTML  = Number(this.session_info.inventory.sugar)
 		document.getElementById("Ice-bar").innerHTML    = Number(this.session_info.inventory.ice)
@@ -548,6 +635,14 @@ class SessionProcess extends GameListeners {
 		document.getElementById("Date-bar").innerHTML  = Number(this.session_info.date)
 		document.querySelector("#username").innerHTML += this.session_info.user.toUpperCase()
 		return true
+	}
+	updateInventory(lemon,sugar,ice,glass) {
+		this.session_info.inventory.lemon = lemon
+		this.session_info.inventory.sugar = sugar
+		this.session_info.inventory.ice   = ice
+		this.session_info.inventory.glass = glass
+		this.updateBar()
+		this.cart.cleanCart()
 	}
 }
 
@@ -599,6 +694,7 @@ class Session extends SessionProcess {
 		if (this.updateBar()!==true) {
 			alert('Problem updating the bar')
 		}
+
 		/**
 		 * go to Menu
 		 */
