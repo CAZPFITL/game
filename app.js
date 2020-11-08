@@ -2,7 +2,7 @@ let session
 
 /////////////////////////////////////////////////////////
 
-let functions                                                 = {
+let functions = {
 	anyNumber                                                 : function(number) {
 		return Math.floor(Math.random() * Math.floor(number))
 	},
@@ -237,25 +237,35 @@ class SessionProcess extends GameListeners {
 		/**
 		 * Session array collection
 		 */
-		this.stages      = ["start","menu","game","post"]
-		this.cart        = new Cart()
-		this.session_info= []
-		this.products    = []
-		this.storages    = []
-	}
-	/*
-	 * screen Change functions
-	 */
-	showMenu() {
-		/**
-		 * Update newGame-Menu Displays
+		this.stages                = ["start","menu","game","post"]
+		/*
+		 * Declare cart
 		 */
-		functions.showObject(document.querySelector("#username"))
-		functions.showObject(document.querySelector(".stats"))
-		functions.showObject(document.querySelector(".display-menu"))
-		functions.hideObject(document.querySelector(".display-start"))
-
-		return true
+		this.cart                  = new Cart()
+		/*
+		 * Declare session info
+		 */
+		this.session_info          = []
+		/*
+		 * Declare products
+		 */
+		this.products              = []
+		/*
+		 * Declare user storages sizes
+		 */
+		this.storages              = []
+		/*
+		 * Declare user storage
+		 */
+		this.session_info.storage  = []
+		/*
+		 * Declare Recepy
+		 */
+		this.session_info.recepy   = []
+		/*
+		 * Declare inventory
+		 */
+		this.session_info.inventory= []
 	}
 	/**
 	 * Products declaration
@@ -347,6 +357,25 @@ class SessionProcess extends GameListeners {
 		return true
 	}
 	/**
+	 * Local Stats declaration
+	 */
+	declareLocalStats(){
+		/**
+		 *Recepy
+		 */
+		this.session_info.recepy.lemon   = 0
+		this.session_info.recepy.sugar   = 0
+		this.session_info.recepy.ice     = 0
+		/**
+		 *Inventory
+		 */
+		this.session_info.inventory.lemon= 0
+		this.session_info.inventory.sugar= 0
+		this.session_info.inventory.ice  = 0
+		this.session_info.inventory.glass= 0
+		return true
+	}
+	/**
 	 * Update Session Storage - Re-usable
 	 */
 	updateSessionStorage(size){
@@ -380,6 +409,25 @@ class SessionProcess extends GameListeners {
 		}
 		return true
 	}
+	/*
+	 * screen Change functions
+	 */
+	showMenu() {
+		/**
+		 * Update newGame-Menu Displays
+		 */
+		functions.showObject(document.querySelector("#username"))
+		document.querySelector(".startup").classList.remove("startup")
+
+		functions.showObject(document.querySelector(".stats"))
+		functions.showObject(document.querySelector(".display-menu"))
+		functions.hideObject(document.querySelector(".display-start"))
+
+		return true
+	}
+	/**
+	 * Recepy Selector
+	 */
 	recepySelector(id) {
 
 		/**
@@ -432,6 +480,9 @@ class SessionProcess extends GameListeners {
 
 		return
 	}
+	/**
+	 * Cart product addition procces start
+	 */
 	addToCart(id){
 		/**
 		 * Get id from the event
@@ -485,6 +536,19 @@ class SessionProcess extends GameListeners {
 		session.cart.addProduct(this.product,this.size,this.price)
 		return
 	}
+	/**
+	 * Update Stats Bar
+	 */
+	updateBar() {
+		document.getElementById("Lemons-bar").innerHTML = Number(this.session_info.inventory.lemon)
+		document.getElementById("Sugar-bar").innerHTML  = Number(this.session_info.inventory.sugar)
+		document.getElementById("Ice-bar").innerHTML    = Number(this.session_info.inventory.ice)
+		document.getElementById("Glasses-bar").innerHTML= Number(this.session_info.inventory.glass)
+		document.getElementById("Money-bar").innerHTML  = Number(this.session_info.money)
+		document.getElementById("Date-bar").innerHTML  = Number(this.session_info.date)
+		document.querySelector("#username").innerHTML += this.session_info.user.toUpperCase()
+		return true
+	}
 }
 
 /////////////////////////////////////////////////////////
@@ -502,44 +566,38 @@ class Session extends SessionProcess {
 		/**
 		 * Start Stage
 		 */
-		this.session_info.stage                               = this.stages[0]
+		this.session_info.stage    = this.stages[0]
 		/**
-		 * Products Declaration
+		 * User initial Declaration
+		 */
+		this.session_info.user     = user
+		/**
+		 * Update initial money
+		 */
+		this.session_info.money    = 100
+		/**
+		 * Update initial date
+		 */
+		this.session_info.date     = 1
+		/**
+		 *
+		 * Declarations
+		 *
 		 */
 		if (this.declareProducts()!==true) {
 			alert('Problem in Product declaration')
 		}
-		/**
-		 * Storage sizes declaration
-		 */
 		if (this.declareStorages()!==true) {
 			alert('Problem in Storages declaration')
 		}
-		/**
-		 * User initial Declaration
-		 */
-		this.session_info.user                                = user
-		/**
-		 * Update initial money
-		 */
-		this.session_info.money                               = 100
-		/**
-		 * Update initial date
-		 */
-		this.session_info.date                                = 1
-		/*
-		 * Declare user storage
-		 */
-		this.session_info.storage                             = []
-		/*
-		 * Declare Recepy
-		 */
-		this.session_info.recepy                              = {lemon:0,sugar:0,ice:0}
-		/**
-		 * Session storage size update
-		 */
 		if (this.updateSessionStorage('small')!==true) {
 			alert('Problem session storage declaration')
+		}
+		if (this.declareLocalStats()!==true) {
+			alert('Problem initializing recepy and/or inventory')
+		}
+		if (this.updateBar()!==true) {
+			alert('Problem updating the bar')
 		}
 		/**
 		 * go to Menu

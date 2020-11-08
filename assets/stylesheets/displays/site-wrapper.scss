@@ -1,5 +1,5 @@
 .hide {
-	display         : none;
+	display         : none !important;
 }
 
 .pointer {
@@ -20,13 +20,22 @@
 	}
 }
 
+.container {
+	max-width       : 1170px;
+	margin          : auto;
+
+	@media("max-width : 1170px") {
+		padding     : 0px 20px;
+	}
+
+}
+
 #app {
 	width           : 100%;
 	min-height      : 100vh;
 	display         : flex;
 	flex-direction  : column;
 	justify-content : space-between;
-	align-items     : center;
 	background      : $background-green;
 	font-family     : $font-primary;
 }

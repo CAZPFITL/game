@@ -5,11 +5,14 @@
 	}
 
 	.menu-container { 
-
+		display         : flex;
+		justify-content : space-around;
+		min-height      : 150px;
 		.product-card { 
-
+			display: flex;
+			flex-direction: column;
+			justify-content   : space-around;
 			.size-box { 
-
 				.pointer { 
 
 				}

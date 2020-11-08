@@ -1,18 +1,24 @@
 .recepy-card { 
 
 	.title { 
-
+		text-align         : center;
 	}
 
 	.menu-container { 
+		display            : flex;
+		justify-content    : space-around;
 
 		.box { 
+			display        : flex;
+			flex-direction : column;
+			align-items    : center;
 
 			.fa { 
 
 			}
 
 			.level { 
+				display    : flex;
 
 				.pointer { 
 

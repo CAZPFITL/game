@@ -33,6 +33,11 @@ html {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5 {
+  margin: 0px;
+  padding: 0px;
+}
+
 *, *::after, *::before {
   box-sizing: inherit;
 }
@@ -43,7 +48,7 @@ html {
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .pointer {
@@ -63,13 +68,22 @@ html {
   transition: 0.2s ease-in-out;
 }
 
+.container {
+  max-width: 1170px;
+  margin: auto;
+}
+@media (max-width : 1170px) {
+  .container {
+    padding: 0px 20px;
+  }
+}
+
 #app {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   background: #5ba75a;
   font-family: "Josefin Slab", serif;
 }
@@ -79,6 +93,111 @@ html {
 }
 .display-start .text-input .name {
   background: #efebe8;
+}
+.display-menu .container {
+  display: flex;
+  flex-flow: row wrap;
+}
+.display-menu .container .recepy-card {
+  flex: 1 70%;
+}
+.display-menu .container .store-card {
+  flex: 1 70%;
+  order: 3;
+}
+.display-menu .container .cart-card {
+  flex: 1 30%;
+  order: 2;
+  margin-bottom: 25px;
+}
+.display-menu .container .start {
+  flex: 1 100%;
+  order: 4;
+}
+.display-menu .container .menu-card {
+  padding: 30px 0px;
+}
+.display-menu .container .menu-card .title {
+  text-align: center;
+}
+@media (max-width : 768px) {
+  .display-menu .container .recepy-card, .display-menu .container .store-card, .display-menu .container .cart-card {
+    flex: 1 100%;
+  }
+  .display-menu .container .recepy-card {
+    border-top: 0px solid #292929 !important;
+  }
+  .display-menu .container .store-card {
+    order: 2;
+  }
+  .display-menu .container .cart-card {
+    order: 3;
+    border-bottom: 1px solid #292929;
+  }
+  .display-menu .container .menu-card {
+    border-top: 1px solid #292929;
+  }
+  .display-menu .container .start {
+    order: 4;
+  }
+}
+
+.app-header .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #efebe8;
+  padding: 10px 15px;
+}
+.app-header .navbar .navbar-item {
+  display: flex;
+  justify-content: space-between;
+}
+.app-header .navbar .navbar-item .head-element {
+  margin-left: 15px;
+  color: #292929;
+}
+.app-header .navbar .navbar-item .title {
+  margin-left: 0px;
+}
+.app-header .startup {
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width : 820px) {
+  .app-header .navbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .app-header .startup {
+    align-items: center;
+  }
+}
+
+.recepy-card .title {
+  text-align: center;
+}
+.recepy-card .menu-container {
+  display: flex;
+  justify-content: space-around;
+}
+.recepy-card .menu-container .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.recepy-card .menu-container .box .level {
+  display: flex;
+}
+.store-card .menu-container {
+  display: flex;
+  justify-content: space-around;
+  min-height: 150px;
+}
+.store-card .menu-container .product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .app-footer {
   display: flex;
