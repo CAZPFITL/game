@@ -1,0 +1,97 @@
+/*
+|----------------------------------------------------------------
+| Description
+|----------------------------------------------------------------
+|
+| This file contains descriptive variables, they're useful to keep
+| Consistency between all the elements and to aid in the process
+| Of designing new interfaces.
+|
+*/
+
+/*
+|----------------------------------------------------------------
+| Sass Variables
+|----------------------------------------------------------------
+*/
+// $font-primary                   : 'Lato', sans-serif;
+// $font-secondary                 : 'Sintony', serif;
+$margin-base                    : 20px;
+$padding-base                   : 20px;
+$hover-transition               : 0.2s ease-in-out;
+
+/*
+|----------------------------------------------------------------
+| Colours
+|----------------------------------------------------------------
+*/
+$black                          : #000000;
+$semi-black                     : #292929;
+$black-gray                     : #414141;
+$darker-gray                    : #333333;
+$dark-gray                      : #3b3b3b;
+$gray                           : #817f7e;
+$grayed-blue                    : #e7f0f4;
+$lighter-gray                   : #f5f4f2;
+$light-gray                     : #e5e2df;
+$dark-blue                      : #00243f;
+$blue                           : #0067b6;
+$low-blue                       : #4f87bc;
+$light-blue                     : #deedf3;
+$turquoise                      : #55b9ac;
+$green                          : #5ba75a;
+$white                          : #ffffff;
+$light-cream                    : #f4f2f0;
+$cream                          : #efebe8;
+$orange                         : #e16e23;
+$old-orange                     : #e16e23;
+$light-orange                   : #eb4c09;
+$red                            : #c21400;
+$footer-black                   : #2e2e2e;
+$footer-black-2                 : #222222;
+
+
+/*
+|----------------------------------------------------------------
+| Colours Variables
+|----------------------------------------------------------------
+*/
+$color-hero-less                : hsla(0,0%,100%,.328);
+$color-separator-keyswitches    : #c4c4c4;
+$color-talks-background         : #f9f9f9;
+$color-listen-button            : #dedede;
+$color-link                     : #008CBA;
+$color-button-options           : #646464;
+$color-top-button               : #253b51;
+$color-top-button               : #253b51;
+$color-navbar-button            : #74b970;
+$color-navbar-background        : #fdfdfd;
+$color-top-button               : rgba(45,65,84,.78);
+$color-headings                 : $dark-blue;
+$color-font                     : $dark-gray;
+$color-borders                  : $light-gray;
+$color-navigation-arrows        : #3382c3;
+$color-clear-font               : #fff;
+$color-button                   : $old-orange;
+
+/*
+|----------------------------------------------------------------
+| Media Queries
+|----------------------------------------------------------------
+*/
+$tablet-large                   : "max-width : 1024px";
+$tablet                         : "max-width : 768px";
+$mobile-large                   : "max-width : 568px";
+$mobile                         : "max-width : 414px";
+$mobile-small                   : "max-width : 320px";
+
+// Pixels to Rem
+@function rem($pixels, $context : 16) {
+  @return #{$pixels/$context}rem;
+}
+// Pixels to Em
+@function em($pixels, $context  : 16) {
+  @return #{$pixels/$context}em;
+}
+
+@import "./before/box-sizing";

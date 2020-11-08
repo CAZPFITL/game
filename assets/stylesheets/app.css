@@ -1,0 +1,64 @@
+/*
+|----------------------------------------------------------------
+| Description
+|----------------------------------------------------------------
+|
+| This file contains descriptive variables, they're useful to keep
+| Consistency between all the elements and to aid in the process
+| Of designing new interfaces.
+|
+*/
+/*
+|----------------------------------------------------------------
+| Sass Variables
+|----------------------------------------------------------------
+*/
+/*
+|----------------------------------------------------------------
+| Colours
+|----------------------------------------------------------------
+*/
+/*
+|----------------------------------------------------------------
+| Colours Variables
+|----------------------------------------------------------------
+*/
+/*
+|----------------------------------------------------------------
+| Media Queries
+|----------------------------------------------------------------
+*/
+html {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+::selection {
+  background: #e75e37;
+  color: #fff;
+}
+
+body .hide {
+  display: none;
+}
+body .pointer {
+  background: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  min-width: 20px;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}
+body .pointer:hover {
+  background: white;
+  border: 1px solid black;
+  color: black;
+  transition: 0.2s ease-in-out;
+}
+
+/*# sourceMappingURL=app.css.map */

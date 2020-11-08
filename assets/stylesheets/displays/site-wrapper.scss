@@ -1,0 +1,23 @@
+body {
+	.hide {
+		display        : none;
+	}
+
+	.pointer {
+		background     : black;
+		color:white;
+		cursor         : pointer;
+		border-radius  : 5px;
+		border         : 1px solid transparent;
+		min-width      : $margin-base;
+		text-align     : center;
+		transition     : $hover-transition;
+
+		&:hover{
+			background : white;
+			border     : 1px solid black;
+			color      : black;
+			transition : $hover-transition;
+		}
+	}
+}

@@ -1,0 +1,17 @@
+html {
+  box-sizing   : border-box;
+}
+
+* {
+  &,
+  &::after,
+  &::before {
+    box-sizing : inherit;
+  }
+}
+
+::selection {
+    background : #e75e37;
+    color      : #fff;
+}
+

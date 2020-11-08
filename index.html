@@ -6,13 +6,11 @@
 		<title>Game</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
-		<link rel="stylesheet" href="styles.css">
+		<!-- <link rel="stylesheet" href="styles.css"> -->
 		<script src="app.js" type="module"></script>
 	</head>
 	<style>
-		.hide {
-			display : none;
-		}
+
 	</style>
 <body>
 	<header class="app-header">
@@ -65,25 +63,25 @@
 						<div class="box">
 							<i class="fa fa-lemon-o" aria-hidden="true"></i>
 							<div class="level">
-								<div id="less-l" class="less less-l">-</div>
+								<div id="less-l" class="pointer less less-l">-</div>
 								<div class="qty qty-l">0</div>
-								<div id="more-l" class="more more-l">+</div>
+								<div id="more-l" class="pointer more more-l">+</div>
 							</div>
 						</div>
 						<div class="box">
 							<i class="fa fa-spoon" aria-hidden="true"></i>
 							<div class="level">
-								<div id="less-s" class="less less-s">-</div>
+								<div id="less-s" class="pointer less less-s">-</div>
 								<div class="qty qty-s">0</div>
-								<div id="more-s" class="more more-s">+</div>
+								<div id="more-s" class="pointer more more-s">+</div>
 							</div>
 						</div>
 						<div class="box">
 							<i class="fa fa-cubes" aria-hidden="true"></i>
 							<div class="level">
-								<div id="less-i" class="less less-i">-</div>
+								<div id="less-i" class="pointer less less-i">-</div>
 								<div class="qty qty-i">0</div>
-								<div id="more-i" class="more more-i">+</div>
+								<div id="more-i" class="pointer more more-i">+</div>
 							</div>
 						</div>
 					</div>
@@ -98,19 +96,19 @@
 						<div class="product-card">
 
 							<div class="size-box">
-								<i id="l-small" class="fa fa-lemon-o p-small" aria-hidden="true"></i>
+								<i id="l-small" class="pointer fa fa-lemon-o p-small" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-l-s"></span>
 								<span>$</span><span class="product-price product-price-l-s"></span>
 							</div>
 
 							<div class="size-box">
-								<i id="l-medium" class="fa fa-lemon-o p-medium" aria-hidden="true"></i>
+								<i id="l-medium" class="pointer fa fa-lemon-o p-medium" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-l-m"></span>
 								<span>$</span><span class="product-price product-price-l-m"></span>
 							</div>
 
 							<div class="size-box">
-								<i id="l-big" class="fa fa-lemon-o p-big" aria-hidden="true"></i>
+								<i id="l-big" class="pointer fa fa-lemon-o p-big" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-l-b"></span>
 								<span>$</span><span class="product-price product-price-l-b"></span>
 							</div>
@@ -120,19 +118,19 @@
 						<div class="product-card">
 
 							<div class="size-box">
-								<i id="s-small" class="fa fa-spoon p-small" aria-hidden="true"></i>
+								<i id="s-small" class="pointer fa fa-spoon p-small" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-s-s"></span>
 								<span>$</span><span class="product-price product-price-s-s"></span>
 							</div>
 
 							<div class="size-box">
-								<i id="s-medium" class="fa fa-spoon p-medium" aria-hidden="true"></i>
+								<i id="s-medium" class="pointer fa fa-spoon p-medium" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-s-m"></span>
 								<span>$</span><span class="product-price product-price-s-m"></span>
 							</div>
 
 							<div class="size-box">
-								<i id="s-big" class="fa fa-spoon p-big" aria-hidden="true"></i>
+								<i id="s-big" class="pointer fa fa-spoon p-big" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-s-b"></span>
 								<span>$</span><span class="product-price product-price-s-b"></span>
 							</div>
@@ -142,19 +140,19 @@
 						<div class="product-card">
 
 							<div class="size-box">
-								<i id="i-small" class="fa fa-cubes p-small" aria-hidden="true"></i>
+								<i id="i-small" class="pointer fa fa-cubes p-small" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-i-s"></span>
 								<span>$</span><span class="product-price product-price-i-s"></span>
 							</div>
 								
 							<div class="size-box">
-								<i id="i-medium" class="fa fa-cubes p-medium" aria-hidden="true"></i>
+								<i id="i-medium" class="pointer fa fa-cubes p-medium" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-i-m"></span>
 								<span>$</span><span class="product-price product-price-i-m"></span>
 							</div>
 								
 							<div class="size-box">
-								<i id="i-big" class="fa fa-cubes p-big" aria-hidden="true"></i>
+								<i id="i-big" class="pointer fa fa-cubes p-big" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-i-b"></span>
 								<span>$</span><span class="product-price product-price-i-b"></span>
 							</div>
@@ -164,19 +162,19 @@
 						<div class="product-card">
 
 							<div class="size-box">
-								<i id="g-small" class="fa fa-glass p-small" aria-hidden="true"></i>
+								<i id="g-small" class="pointer fa fa-glass p-small" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-g-s"></span>
 								<span>$</span><span class="product-price product-price-g-s"></span>
 							</div>
 								
 							<div class="size-box">
-								<i id="g-medium" class="fa fa-glass p-medium" aria-hidden="true"></i>
+								<i id="g-medium" class="pointer fa fa-glass p-medium" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-g-m"></span>
 								<span>$</span><span class="product-price product-price-g-m"></span>
 							</div>
 								
 							<div class="size-box">
-								<i id="g-big" class="fa fa-glass p-big" aria-hidden="true"></i>
+								<i id="g-big" class="pointer fa fa-glass p-big" aria-hidden="true"></i>
 								<span>x</span><span class="size-qty size-qty-g-b"></span>
 								<span>$</span><span class="product-price product-price-g-b"></span>
 							</div>
@@ -202,11 +200,11 @@
 					</div>
 					<div class="totals">
 						<span class="cart_total">$</span><span class="digit">0</span>
-						<div class="clean_cart">Clean Cart 🗑️</div>
-						<div class="buy">Buy</div>
+						<div class="pointer clean_cart">Clean Cart 🗑️</div>
+						<div class="pointer buy">Buy</div>
 					</div>
 				</div>
-				<div class="start">START</div>
+				<div class="pointer start">START</div>
 			</div>
 		</div>
 
