@@ -1,41 +1,52 @@
 .hide {
-	display         : none !important;
+	display           : none !important;
 }
 
 .pointer {
-	background      : black;
-	color:white;
-	cursor          : pointer;
-	border-radius   : 5px;
-	border          : 1px solid transparent;
-	min-width       : $margin-base;
-	text-align      : center;
-	transition      : $hover-transition;
+	background        : black;
+	color             : white;
+	cursor            : pointer;
+	border-radius     : 5px;
+	border            : 1px solid transparent;
+	min-width         : $margin-base;
+	text-align        : center;
+	transition        : $hover-transition;
+	box-shadow        : 0 2px 3px rgba(0,0,0,.08), 0 10px 6px rgba(0,0,0,.032), inset 0 2px 3px rgba(0,0,0,.08), inset 0 10px 6px rgba(0,0,0,.032);
 
 	&:hover{
-		background  : white;
-		border      : 1px solid black;
-		color       : black;
-		transition  : $hover-transition;
+		background    : white;
+		border        : 1px solid black;
+		color         : black;
+		transition    : $hover-transition;
 	}
 }
 
 .container {
-	max-width       : 1170px;
-	margin          : auto;
+	max-width         : 1170px;
+	margin            : auto;
 
 	@media("max-width : 1170px") {
-		padding     : 0px 20px;
+		padding       : 0px 20px;
 	}
 
 }
-
+// .grab {cursor         : -webkit-grab; cursor: grab;}
+// .grabbing {cursor     : -webkit-grabbing; cursor: grabbing;}
 #app {
-	width           : 100%;
-	min-height      : 100vh;
-	display         : flex;
-	flex-direction  : column;
-	justify-content : space-between;
-	background      : $background-green;
-	font-family     : $font-primary;
+	width             : 100%;
+	min-height        : 100vh;
+	display           : flex;
+	flex-direction    : column;
+	justify-content   : space-between;
+	background        : $background-green;
+	font-family       : $font-primary;
+}
+
+textarea,a {
+	cursor : pointer;
+}
+
+#app,label{
+	cursor            : -webkit-grab; 
+	cursor            : grab;
 }

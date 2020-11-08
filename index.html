@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Game</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
@@ -17,33 +17,44 @@
 			<header class="app-header">
 				<div class="navbar startup">
 					<div class="navbar-item">
-						<h2 class="head-element title">Lemonade Tycoon</h2>
-						<h2 id="username" class="hide head-element">User: </h2>
+						<h2 class="head-element title">Lemonade Tycoon :</h2>
+						<h2 id="username" class="hide head-element"></h2>
 					</div>
 					<div class="hide stats navbar-item">
 						<div class="head-element">
-							<i class="icon">Money</i>
-							<label id="Money-bar" class="label"></label>
+							<i class="fa fa-money" aria-hidden="true"></i>
+							<label class="icon">Money</label>
+							<label id="Money-bar" class="label strong"></label>
 						</div>
 						<div class="head-element">
-							<i class="icon">Day</i>
-							<label id="Date-bar" class="label"></label>
+							<span class="spacer">|</span>
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+							<label class="label">Day</label>
+							<label id="Date-bar" class="label strong"></label>
 						</div>
 						<div class="head-element">
-							<i class="icon">Lemons</i>
-							<label id="Lemons-bar" class="label">0</label>
+							<span class="spacer">|</span>
+							<i class="fa fa-lemon-o" aria-hidden="true"></i>
+							<label class="label">Lemons</label>
+							<label id="Lemons-bar" class="label strong">0</label><label class="limit limit-l">/10</label>
 						</div>
 						<div class="head-element">
-							<i class="icon">Sugar</i>
-							<label id="Sugar-bar" class="label">0</label>
+							<span class="spacer">|</span>
+							<i class="fa fa-spoon" aria-hidden="true"></i>
+							<label class="label">Sugar</label>
+							<label id="Sugar-bar" class="label strong">0</label><label class="limit limit-s">/10</label>
 						</div>
 						<div class="head-element">
-							<i class="icon">Ice</i>
-							<label id="Ice-bar" class="label">0</label>
+							<span class="spacer">|</span>
+							<i class="fa fa-cubes" aria-hidden="true"></i>
+							<label class="label">Ice</label>
+							<label id="Ice-bar" class="label strong">0</label><label class="limit limit-i">/10</label>
 						</div>
 						<div class="head-element">
-							<i class="icon">Glasses</i>
-							<label id="Glasses-bar" class="label">0</label>
+							<span class="spacer">|</span>
+							<i class="fa fa-glass" aria-hidden="true"></i>
+							<label class="label">Glasses</label>
+							<label id="Glasses-bar" class="label strong">0</label><label class="limit limit-g">/20</label>
 						</div>
 					</div>
 				</div>
@@ -69,7 +80,7 @@
 									<i class="fa fa-lemon-o" aria-hidden="true"></i>
 									<div class="level">
 										<div id="less-l" class="pointer less less-l">-</div>
-										<div class="qty qty-l">0</div>
+										<div class="qty"><span class="qty-l">0</span>/10</div>
 										<div id="more-l" class="pointer more more-l">+</div>
 									</div>
 								</div>
@@ -77,7 +88,7 @@
 									<i class="fa fa-spoon" aria-hidden="true"></i>
 									<div class="level">
 										<div id="less-s" class="pointer less less-s">-</div>
-										<div class="qty qty-s">0</div>
+										<div class="qty"><span class="qty-s">0</span>/10</div>
 										<div id="more-s" class="pointer more more-s">+</div>
 									</div>
 								</div>
@@ -85,7 +96,7 @@
 									<i class="fa fa-cubes" aria-hidden="true"></i>
 									<div class="level">
 										<div id="less-i" class="pointer less less-i">-</div>
-										<div class="qty qty-i">0</div>
+										<div class="qty"><span class="qty-i">0</span>/10</div>
 										<div id="more-i" class="pointer more more-i">+</div>
 									</div>
 								</div>

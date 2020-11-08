@@ -24,10 +24,10 @@ class Client {
 		this.patience= patience
 	}
 	createClient(age,money,patience) {
-		this.age     = age
-		this.money   = money
-		this.patience= patience
-		this.clients_length = functions.anyNumber(20)
+		this.age           = age
+		this.money         = money
+		this.patience      = patience
+		this.clients_length= functions.anyNumber(20)
 		console.log(this.clients_length)
 	}
 }
@@ -158,7 +158,7 @@ class Cart {
 			session.session_info.money = session.session_info.money - session.cart.total_cart_price
 		}
 
-		session.updateInventory(this.lemon_total,this.sugar_total,this.ice_total,this.glass_total)
+		session.updateInventory(this.lemon_total,this.sugar_total,this.ice_total,this.glass_total,"inventory_in")
 	}
 }
 
@@ -568,8 +568,8 @@ class SessionProcess extends GameListeners {
 		 */
 		if(this.product===`l`){
 			this.product = `lemon`
-			if(this.size==='small') { this.size=session.products[0][1];this.price=session.products[2][2]}
-			if(this.size==='medium'){ this.size=session.products[1][1];this.price=session.products[2][2]}
+			if(this.size==='small') { this.size=session.products[0][1];this.price=session.products[0][2]}
+			if(this.size==='medium'){ this.size=session.products[1][1];this.price=session.products[1][2]}
 			if(this.size==='big')   { this.size=session.products[2][1];this.price=session.products[2][2]}
 		}
 		/*
@@ -610,37 +610,82 @@ class SessionProcess extends GameListeners {
 	 */
 	updateBar() {
 		/*
-		 *limit the totals
-		 */
-		if (this.session_info.inventory.lemon > this.session_info.storage.lemon) {
-			this.session_info.inventory.lemon = this.session_info.storage.lemon
-		}
-		else if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
-			this.session_info.inventory.sugar = this.session_info.storage.sugar
-		}
-		else if (this.session_info.inventory.ice > this.session_info.storage.ice) {
-			this.session_info.inventory.ice = this.session_info.storage.ice
-		}
-		else if (this.session_info.inventory.glass > this.session_info.storage.glass) {
-			this.session_info.inventory.glass = this.session_info.storage.glass
-		}
-		/*
 		 * update bar
 		 */
-		document.getElementById("Lemons-bar").innerHTML = Number(this.session_info.inventory.lemon)
-		document.getElementById("Sugar-bar").innerHTML  = Number(this.session_info.inventory.sugar)
-		document.getElementById("Ice-bar").innerHTML    = Number(this.session_info.inventory.ice)
-		document.getElementById("Glasses-bar").innerHTML= Number(this.session_info.inventory.glass)
-		document.getElementById("Money-bar").innerHTML  = Number(this.session_info.money)
-		document.getElementById("Date-bar").innerHTML  = Number(this.session_info.date)
-		document.querySelector("#username").innerHTML += this.session_info.user.toUpperCase()
+		 
+		document.getElementById("Lemons-bar").innerHTML = this.session_info.inventory.lemon
+		document.getElementById("Sugar-bar").innerHTML  = this.session_info.inventory.sugar
+		document.getElementById("Ice-bar").innerHTML    = this.session_info.inventory.ice
+		document.getElementById("Glasses-bar").innerHTML= this.session_info.inventory.glass
+		document.getElementById("Money-bar").innerHTML  = this.session_info.money
+		document.getElementById("Date-bar").innerHTML   = this.session_info.date
+		document.querySelector("#username").innerHTML   = this.session_info.user.toUpperCase()
 		return true
 	}
-	updateInventory(lemon,sugar,ice,glass) {
-		this.session_info.inventory.lemon = lemon
-		this.session_info.inventory.sugar = sugar
-		this.session_info.inventory.ice   = ice
-		this.session_info.inventory.glass = glass
+	updateInventory(lemon,sugar,ice,glass,movement) {
+		this.lemon   = lemon
+		this.sugar   = sugar
+		this.ice     = ice
+		this.glass   = glass
+		this.movement= movement
+
+		switch (movement) {
+			/**
+			 * Validation on inventory entry
+			 */
+			case 'inventory_in':
+				this.session_info.inventory.lemon = this.session_info.inventory.lemon + this.lemon
+				this.session_info.inventory.sugar = this.session_info.inventory.sugar + this.sugar
+				this.session_info.inventory.ice   = this.session_info.inventory.ice   + this.ice
+				this.session_info.inventory.glass = this.session_info.inventory.glass + this.glass
+				/*
+				 * limit the totals nothing bigger than the storage limits
+				 */
+				 console.log(this.session_info.inventory.glass,this.session_info.storage.glass)
+				if (this.session_info.inventory.lemon > this.session_info.storage.lemon) {
+					this.session_info.inventory.lemon = this.session_info.storage.lemon
+				}
+				else if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
+					this.session_info.inventory.sugar = this.session_info.storage.sugar
+				}
+				else if (this.session_info.inventory.ice > this.session_info.storage.ice) {
+					this.session_info.inventory.ice = this.session_info.storage.ice
+				}
+				else if (this.session_info.inventory.glass > this.session_info.storage.glass) {
+					this.session_info.inventory.glass = this.session_info.storage.glass
+				}
+				break
+			/**
+			 * Validation on inventory out
+			 */
+			case 'inventory_out':
+				this.session_info.inventory.lemon = this.session_info.inventory.lemon - this.lemon
+				this.session_info.inventory.sugar = this.session_info.inventory.sugar - this.sugar
+				this.session_info.inventory.ice   = this.session_info.inventory.ice   - this.ice
+				this.session_info.inventory.glass = this.session_info.inventory.glass - this.glass
+				/*
+				 *limit the totals nothing smaller than 0
+				 */
+				 console.log(this.session_info.inventory.lemon,this.session_info.storage.lemon)
+				if (this.session_info.inventory.lemon < 0) {
+					this.session_info.inventory.lemon = 0
+					alert('You run out lemons')
+				}
+				else if (this.session_info.inventory.sugar < 0) {
+					this.session_info.inventory.sugar = 0
+					alert('You run out sugar')
+				}
+				else if (this.session_info.inventory.ice < 0) {
+					this.session_info.inventory.ice = 0
+					alert('You run out ice')
+				}
+				else if (this.session_info.inventory.glass < 0) {
+					this.session_info.inventory.glass = 0
+					alert('You run out glass')
+				}
+				break
+		}
+
 		this.updateBar()
 		this.cart.cleanCart()
 	}
@@ -669,7 +714,7 @@ class Session extends SessionProcess {
 		/**
 		 * Update initial money
 		 */
-		this.session_info.money    = 100
+		this.session_info.money    = 50
 		/**
 		 * Update initial date
 		 */

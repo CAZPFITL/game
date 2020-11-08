@@ -1,5 +1,5 @@
 .display-menu { 
-
+	padding: 10% 0px;
 	.container { 
 		display               : flex;
 		flex-flow             : row wrap;
@@ -50,7 +50,14 @@
 			}
 
 		}
-
 	}
-
+	@media("max-width : 1034px"){
+		padding: 105px 0px 40px;
+	}
+	@media("max-width : 716px"){
+		padding: 150px 0px 40px;
+	}
+	@media("max-width : 390px") {
+		padding: 190px 0px 40px;
+	}
 }

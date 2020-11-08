@@ -1,32 +1,63 @@
 .cart-card { 
 	.title { 
-
+		padding-bottom            : 0px;
 		.cart_total_title { 
 
 		}
+
 	}
 
 	.titles { 
-		display            : flex;
+		display                   : flex;
 
 		.cart-list-title { 
-			flex           : 1 33%;
+			flex                  : 1 33%;
+			text-align            : center;
 		}
+
 	}
 
 	.cart-list { 
-		display            : flex;
-		min-height         : 180px;
-		background         : $cream;
+		display                   : flex;
+		min-height                : 240px;
+		padding                   : 10px;
+		background                : rgb(210 255 136 / 50%);
+		border-radius             : 8px;
 		.cart-item-list { 
-			display        : flex;
-			flex-direction : column;
-			flex           : 1 33%;
+			display               : flex;
+			flex-direction        : column;
+			flex                  : 1 33%;
+			span {
+				box-shadow        : 
+						0 2px 3px rgba(0, 0, 0, 0.2);
+			}
+			&:nth-child(1){
+				span {
+					border-radius : 10px 0% 0% 10px;
+				}
+			}
+			&:nth-child(2){
+				span {
+				}
+			}
+			&:nth-child(3){
+				span {
+					border-radius : 0px 10px 10px 0px;
+				}
+			}
 		}
+
+		.cart-item-list > * {
+			background            : $cream;
+			margin                : 2px 0px;
+			text-align            : center;
+		}
+
 	}
 
 	.totals { 
-
+		text-align                : right;
+		margin                    : 10px 60px;
 		.cart_total { 
 
 		}
