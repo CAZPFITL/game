@@ -1,23 +1,32 @@
 .display-start { 
 
+	.text-input > * {
+		margin: 20px 0px;
+	}
+
 	.text-input { 
 
-		.start-game { 
-
+		.name { 
+			margin: 0px;
 		}
 
-		.label,.name,.begin { 
-			width: 100%;
+		.start-game,.label,.name,.begin { 
+			width      : 100%;
+			display    : block;
+			text-align : center;
 		}
 
 		.name { 
-			background: $cream;
+			background  : $cream;
 		}
 
 		.begin { 
-
+			font-size   : 20px;
+			line-height : 20px;
+			padding     : 15px 0px;
 		}
 
 	}
+
 
 }

@@ -1,5 +1,4 @@
 .cart-card { 
-
 	.title { 
 
 		.cart_total_title { 
@@ -8,16 +7,21 @@
 	}
 
 	.titles { 
+		display            : flex;
 
 		.cart-list-title { 
-
+			flex           : 1 33%;
 		}
 	}
 
 	.cart-list { 
-
+		display            : flex;
+		min-height         : 180px;
+		background         : $cream;
 		.cart-item-list { 
-
+			display        : flex;
+			flex-direction : column;
+			flex           : 1 33%;
 		}
 	}
 
