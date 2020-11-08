@@ -1,24 +1,23 @@
 .display-start { 
 
-	.container { 
+	.text-input { 
 
-		.text-input { 
+		.start-game { 
 
-			.start-game { 
-
-			}
-
-			.label { 
-
-			}
-
-			.name { 
-
-			}
-
-			.begin { 
-
-			}
 		}
+
+		.label,.name,.begin { 
+			width: 100%;
+		}
+
+		.name { 
+			background: $cream;
+		}
+
+		.begin { 
+
+		}
+
 	}
+
 }

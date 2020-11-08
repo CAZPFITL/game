@@ -14,7 +14,9 @@
 | Sass Variables
 |----------------------------------------------------------------
 */
-// $font-primary                   : 'Lato', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&display=swap');
+
+$font-primary                   : 'Josefin Slab', serif;
 // $font-secondary                 : 'Sintony', serif;
 $margin-base                    : 20px;
 $padding-base                   : 20px;
@@ -56,7 +58,8 @@ $footer-black-2                 : #222222;
 | Colours Variables
 |----------------------------------------------------------------
 */
-$color-hero-less                : hsla(0,0%,100%,.328);
+$background-green               : #5ba75a;
+
 $color-separator-keyswitches    : #c4c4c4;
 $color-talks-background         : #f9f9f9;
 $color-listen-button            : #dedede;

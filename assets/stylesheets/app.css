@@ -13,6 +13,7 @@
 | Sass Variables
 |----------------------------------------------------------------
 */
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&display=swap");
 /*
 |----------------------------------------------------------------
 | Colours
@@ -37,14 +38,15 @@ html {
 }
 
 ::selection {
-  background: #e75e37;
-  color: #fff;
+  background: #000;
+  color: green;
 }
 
-body .hide {
+.hide {
   display: none;
 }
-body .pointer {
+
+.pointer {
   background: black;
   color: white;
   cursor: pointer;
@@ -54,11 +56,34 @@ body .pointer {
   text-align: center;
   transition: 0.2s ease-in-out;
 }
-body .pointer:hover {
+.pointer:hover {
   background: white;
   border: 1px solid black;
   color: black;
   transition: 0.2s ease-in-out;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #5ba75a;
+  font-family: "Josefin Slab", serif;
+}
+
+.display-start .text-input .label, .display-start .text-input .name, .display-start .text-input .begin {
+  width: 100%;
+}
+.display-start .text-input .name {
+  background: #efebe8;
+}
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 /*# sourceMappingURL=app.css.map */
