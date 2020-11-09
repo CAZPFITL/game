@@ -1,17 +1,30 @@
 let session
+let save = localStorage.getItem('save');
+console.log(save)
+if(save!==null) {
+	session = save
+}
 
 /////////////////////////////////////////////////////////
 
-let functions = {
-	anyNumber                                                 : function(number) {
+let functions  = {
+	anyNumber  : function(number) {
 		return Math.floor(Math.random() * Math.floor(number))
 	},
-	hideObject                                                : function(object){
-		object                                                = object.classList.add("hide")
+	hideObject : function(object){
+		object = object.classList.add("hide")
 
 	},
-	showObject                                                : function(object){
-		object                                                = object.classList.remove("hide")
+	showObject : function(object){
+		object = object.classList.remove("hide")
+	},
+	showMessage : function(message){
+		document.querySelector(".note-wrapper").classList.remove("hide")
+		console.log(document.querySelector(".note-wrapper"))
+		document.querySelector(".note-message").innerHTML= message
+	},
+	closeMessage : function(){
+		document.querySelector(".note-wrapper").classList.add("hide")
 	}
 }
 
@@ -152,7 +165,7 @@ class Cart {
 		}
 		
 		if(session.session_info.money < session.cart.total_cart_price) {
-			alert("Not enought Money")
+			functions.showMessage('¡Not enought Money!')
 			return
 		}else {
 			session.session_info.money = session.session_info.money - session.cart.total_cart_price
@@ -233,6 +246,7 @@ class GameListeners {
 		/**
 		 * Cart Listeners
 		 */
+		document.querySelector(".note-close").addEventListener('click', functions.closeMessage)
 		document.querySelector('.clean_cart').addEventListener('click', this.cart.cleanCart)
 		document.querySelector('.buy').addEventListener('click', this.cart.buyCart)
 		/*
@@ -544,7 +558,7 @@ class SessionProcess extends GameListeners {
 			break
 
 			default:
-			alert('ERROR')
+			functions.showMessage('Error!!!')
 			break
 		}
 
@@ -634,6 +648,7 @@ class SessionProcess extends GameListeners {
 			 * Validation on inventory entry
 			 */
 			case 'inventory_in':
+				 // console.log(this.session_info.inventory.ice,this.session_info.storage.ice)
 				this.session_info.inventory.lemon = this.session_info.inventory.lemon + this.lemon
 				this.session_info.inventory.sugar = this.session_info.inventory.sugar + this.sugar
 				this.session_info.inventory.ice   = this.session_info.inventory.ice   + this.ice
@@ -641,18 +656,21 @@ class SessionProcess extends GameListeners {
 				/*
 				 * limit the totals nothing bigger than the storage limits
 				 */
-				 console.log(this.session_info.inventory.glass,this.session_info.storage.glass)
 				if (this.session_info.inventory.lemon > this.session_info.storage.lemon) {
 					this.session_info.inventory.lemon = this.session_info.storage.lemon
+				}else {
 				}
-				else if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
+				if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
 					this.session_info.inventory.sugar = this.session_info.storage.sugar
+				}else {
 				}
-				else if (this.session_info.inventory.ice > this.session_info.storage.ice) {
+				if (this.session_info.inventory.ice > this.session_info.storage.ice) {
 					this.session_info.inventory.ice = this.session_info.storage.ice
+				}else {
 				}
-				else if (this.session_info.inventory.glass > this.session_info.storage.glass) {
+				if (this.session_info.inventory.glass > this.session_info.storage.glass) {
 					this.session_info.inventory.glass = this.session_info.storage.glass
+				}else {
 				}
 				break
 			/**
@@ -739,7 +757,6 @@ class Session extends SessionProcess {
 		if (this.updateBar()!==true) {
 			alert('Problem updating the bar')
 		}
-
 		/**
 		 * go to Menu
 		 */
@@ -774,9 +791,18 @@ class Session extends SessionProcess {
 		if (!event.target || !event.target.value) {
 			return;
 		}
-		session                                               = new Session(event.target.value)
+		session = new Session(event.target.value)
+		/**
+		 * Save game constantly
+		 */
+		 setInterval(function(){ 
+		 	console.log('game saved')
+		}, 1000);
 		console.log(session)
 	}
+	// ;localStorage.setItem('save', session);
+	console.log(session)
+
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
 })();

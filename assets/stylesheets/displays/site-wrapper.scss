@@ -30,8 +30,8 @@
 	}
 
 }
-// .grab {cursor         : -webkit-grab; cursor: grab;}
-// .grabbing {cursor     : -webkit-grabbing; cursor: grabbing;}
+// .grab {cursor      : -webkit-grab; cursor: grab;}
+// .grabbing {cursor  : -webkit-grabbing; cursor: grabbing;}
 #app {
 	width             : 100%;
 	min-height        : 100vh;
@@ -39,11 +39,12 @@
 	flex-direction    : column;
 	justify-content   : space-between;
 	background        : $background-green;
-	font-family       : $font-primary;
+	font-family       : $font-secondary;
+	position          : relative;
 }
 
 textarea,a {
-	cursor : pointer;
+	cursor            : pointer;
 }
 
 #app,label{

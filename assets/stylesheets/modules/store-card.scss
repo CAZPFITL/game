@@ -1,7 +1,7 @@
 .store-card { 
 
 	.title { 
-		padding-top: 0px;
+		padding-top                 : 0px;
 	}
 
 	.menu-container { 
@@ -15,21 +15,25 @@
 			justify-content         : space-around;
 
 			.size-box { 
+				span {
+					font-family     : $font-secondary;
+					font-size       : 10px;
+				}
 				&:nth-child(1) {
 					.fa {
-						font-size: 12px;
+						font-size   : 12px;
 					}
 				}
 
 				&:nth-child(2) {
 					.fa {
-						font-size: 18px;
+						font-size   : 18px;
 					}
 				}
 
 				&:nth-child(3) {
 					.fa {
-						font-size: 22px;
+						font-size   : 22px;
 					}
 				}
 			}
@@ -39,12 +43,13 @@
 				margin              : 5px 0px;
 
 				.fa {
-					width           : 40px;
-					height          : 40px;
+					width           : 50px;
+					height          : 50px;
 					display         : flex;
 					justify-content : center;
 					align-items     : center;
 					margin          : 0px;
+					border-radius   : 50%;
 				}
 
 				.pointer { 

@@ -1,32 +1,33 @@
 .display-menu { 
-	padding: 10% 0px;
+	padding                 : 10% 0px;
 	.container { 
-		display               : flex;
-		flex-flow             : row wrap;
+		display             : flex;
+		flex-flow           : row wrap;
 
 		.recepy-card { 
-			flex              : 1 70%;
+			flex            : 1 70%;
 		}
 
 		.store-card { 
-			flex              : 1 70%;
-			order             : 3;
+			flex            : 1 70%;
+			order           : 3;
 		}
 
 		.cart-card { 
-			flex              : 1 30%;
-			order             : 2;
+			flex            : 1 30%;
+			order           : 2;
 		}
 
 		.start { 
-			flex              : 1 100%;
-			order             : 4;
+			flex            : 1 100%;
+			order           : 4;
 		}
 
 		.menu-card {
 			.title {
-				text-align    : center;
-				padding       : 20px 0px;
+				font-size   : 15px;
+				text-align  : center;
+				padding     : 20px 0px;
 			}
 
 		}
@@ -37,27 +38,27 @@
 		.container {
 
 			.recepy-card,.store-card,.cart-card  {
-				flex          : 1 100%;
+				flex        : 1 100%;
 			}
 			.store-card { 
-				order         : 2;
+				order       : 2;
 			}
 			.cart-card { 
-				order         : 3;
+				order       : 3;
 			}
 			.start { 
-				order         : 4;
+				order       : 4;
 			}
 
 		}
 	}
-	@media("max-width : 1034px"){
-		padding: 105px 0px 40px;
+	@media("max-width       : 1034px"){
+		padding             : 105px 0px 40px;
 	}
-	@media("max-width : 716px"){
-		padding: 150px 0px 40px;
+	@media("max-width       : 716px"){
+		padding             : 150px 0px 40px;
 	}
-	@media("max-width : 390px") {
-		padding: 190px 0px 40px;
+	@media("max-width       : 390px") {
+		padding             : 190px 0px 40px;
 	}
 }

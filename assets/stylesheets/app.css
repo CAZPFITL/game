@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 |----------------------------------------------------------------
 | Description
@@ -14,6 +15,7 @@
 |----------------------------------------------------------------
 */
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 /*
 |----------------------------------------------------------------
 | Colours
@@ -86,7 +88,8 @@ h1, h2, h3, h4, h5 {
   flex-direction: column;
   justify-content: space-between;
   background: #5ba75a;
-  font-family: "Josefin Slab", serif;
+  font-family: "Press Start 2P", cursive;
+  position: relative;
 }
 
 textarea, a {
@@ -101,16 +104,27 @@ textarea, a {
 .display-start .text-input > * {
   margin: 20px 0px;
 }
-.display-start .text-input .name {
-  margin: 0px;
+.display-start .text-input {
+  width: 400px;
+  margin: 0px auto;
 }
 .display-start .text-input .start-game, .display-start .text-input .label, .display-start .text-input .name, .display-start .text-input .begin {
-  width: 100%;
+  width: 110%;
   display: block;
   text-align: center;
+  margin-left: -5%;
 }
 .display-start .text-input .name {
   background: #efebe8;
+  font-size: 40px;
+  line-height: 40px;
+  height: 47px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 6px;
+  overflow: hidden;
+  text-transform: uppercase;
 }
 .display-start .text-input .begin {
   font-size: 20px;
@@ -141,6 +155,7 @@ textarea, a {
   order: 4;
 }
 .display-menu .container .menu-card .title {
+  font-size: 15px;
   text-align: center;
   padding: 20px 0px;
 }
@@ -174,6 +189,40 @@ textarea, a {
   }
 }
 
+.note-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.note-wrapper .note {
+  height: 300px;
+  width: 250px;
+  background: url(../images/Note.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.note-wrapper .note .fa {
+  position: relative;
+  bottom: 115px;
+  left: 115px;
+}
+.note-wrapper .note .note-message {
+  transform: translateX(-28px);
+  max-width: 140px;
+  max-height: 190px;
+  text-align: center;
+}
+
 .app-header .navbar {
   position: fixed;
   width: 100%;
@@ -182,6 +231,7 @@ textarea, a {
   align-items: center;
   background: #efebe8;
   padding: 10px 15px;
+  font-size: 10px;
 }
 .app-header .navbar .navbar-item {
   display: flex;
@@ -273,8 +323,8 @@ textarea, a {
   margin: 0px 20px;
   border-radius: 46%;
   text-align: center;
-  font-size: 22px;
   line-height: 29px;
+  font-size: 10px;
 }
 @media (max-width : 768px) {
   .recepy-card .menu-container {
@@ -309,6 +359,10 @@ textarea, a {
   flex-direction: column;
   justify-content: space-around;
 }
+.store-card .menu-container .product-card .size-box span {
+  font-family: "Press Start 2P", cursive;
+  font-size: 10px;
+}
 .store-card .menu-container .product-card .size-box:nth-child(1) .fa {
   font-size: 12px;
 }
@@ -323,12 +377,13 @@ textarea, a {
   margin: 5px 0px;
 }
 .store-card .menu-container .product-card .size-box .fa {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0px;
+  border-radius: 50%;
 }
 .cart-card .title {
   padding-bottom: 0px;
@@ -370,6 +425,22 @@ textarea, a {
   text-align: right;
   margin: 10px 60px;
 }
+.cart-card .totals .pointer {
+  padding: 10px 0px;
+  border-radius: 8px;
+}
+.cart-card .totals .clean_cart {
+  margin: 20px auto 10px;
+}
+.cart-card .totals .clean_cart:after {
+  transform: translate(10px, -3px);
+  display: inline-block;
+  content: "🗑️";
+}
+.cart-card .totals .buy {
+  margin: 0px auto 20px;
+}
+
 .app-footer {
   display: flex;
   justify-content: space-between;

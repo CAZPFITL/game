@@ -62,12 +62,22 @@
 
 		}
 
-		.digit { 
-
+		.pointer { 
+			padding               : 10px 0px;
+			border-radius         : 8px;
 		}
 
-		.pointer { 
+		.clean_cart { 
+			margin                : 20px auto 10px;
+			&:after {
+				transform         : translate(10px, -3px);
+				display           : inline-block;
+				content           : "🗑️";
+			}
+		}
 
+		.buy { 
+			margin                : 0px auto 20px;
 		}
 	}
 }

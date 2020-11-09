@@ -1,0 +1,38 @@
+.note-wrapper { 
+	position              : fixed;
+	top                   : 0;
+	bottom                : 0;
+	left                  : 0;
+	right                 : 0;
+	z-index               : 99;
+	display               : flex;
+	justify-content       : center;
+	align-items           : center;
+
+	.note { 
+		height            : 300px;
+		width             : 250px;
+		background        : url(../images/Note.png);
+		background-size   : contain;
+		background-repeat : no-repeat;
+		overflow          : hidden;
+		display           : flex;
+		justify-content   : center;
+		align-items       : center;
+
+		.fa {
+			position      : relative;
+			bottom        : 115px;
+			left          : 115px;
+		}
+
+		.note-message { 
+			transform     : translateX(-28px);
+			max-width     : 140px;
+			max-height    : 190px;
+			text-align    : center;
+		}
+
+	}
+
+}

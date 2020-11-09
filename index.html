@@ -14,6 +14,12 @@
 	</style>
 	<body>
 		<div id="app">
+			<div class="hide note-wrapper">
+				<div class="note">
+					<i class="pointer fa fa-close note-close" aria-hidden="true"></i>
+					<span class="note-message"></span>
+				</div>
+			</div>
 			<header class="app-header">
 				<div class="navbar startup">
 					<div class="navbar-item">
@@ -64,8 +70,8 @@
 					<div class="container">
 						<div class="text-input">
 							<span class="start-game">To Start Game</span>
-							<label class="label">Please enter your name:</label>
-							<textarea class="name input"></textarea>
+							<label class="label">Please type your initials:</label>
+							<textarea class="name input" maxlength=4></textarea>
 							<div class="pointer begin">Start</div>
 						</div>
 					</div>
@@ -216,7 +222,7 @@
 							</div>
 							<div class="totals">
 								<span class="cart_total">$</span><span class="digit">0</span>
-								<div class="pointer clean_cart">Clean Cart 🗑️</div>
+								<div class="pointer clean_cart">Clean Cart</div>
 								<div class="pointer buy">Buy</div>
 							</div>
 						</div>
