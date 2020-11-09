@@ -1,11 +1,5 @@
 let session
-let save = localStorage.getItem('save');
-console.log(save)
-if(save!==null) {
-	session = save
-}
-
-/////////////////////////////////////////////////////////
+let savedGame
 
 let functions  = {
 	anyNumber  : function(number) {
@@ -20,52 +14,43 @@ let functions  = {
 	},
 	showMessage : function(message){
 		document.querySelector(".note-wrapper").classList.remove("hide")
-		console.log(document.querySelector(".note-wrapper"))
 		document.querySelector(".note-message").innerHTML= message
 	},
 	closeMessage : function(){
 		document.querySelector(".note-wrapper").classList.add("hide")
 	}
 }
-
-/////////////////////////////////////////////////////////
-
-class Client {
-	constructor(age,money,patience){
-		this.age     = age
-		this.money   = money
-		this.patience= patience
-	}
-	createClient(age,money,patience) {
-		this.age           = age
-		this.money         = money
-		this.patience      = patience
-		this.clients_length= functions.anyNumber(20)
-		console.log(this.clients_length)
-	}
-}
-
-/////////////////////////////////////////////////////////
-
-class Match extends Client {
+//Declared on Base
+class UserInfo {
 	constructor() {
-		super()
-	}
-	newMatch(){
-
 	}
 }
-
-/////////////////////////////////////////////////////////
-
+//Declared on Base
+class Storage {
+	constructor() {
+	}
+	createStorage(lemon,sugar,ice,glasses,alias){
+		this.lemon                                            = lemon
+		this.sugar                                            = sugar
+		this.ice                                              = ice
+		this.glasses                                          = glasses
+		this.alias                                            = alias
+		return [this.lemon,this.sugar,this.ice,this.glasses,this.alias]
+	}
+}
+//Declared on Base
+class Recepy {
+	constructor() {
+	}
+}
+//Declared on Base
 class Product {
-	constructor(name,size,price,alias){
+	constructor(name,size,price,alias) {
 		this.name = name
 		this.size = size
 		this.price= price
 		this.alias= alias
 	}
-
 	createProduct(name,size,price,alias){
 		this.name = name
 		this.size = size
@@ -74,28 +59,81 @@ class Product {
 		return [this.name,this.size,this.price,this.alias]
 	}
 }
-
-/////////////////////////////////////////////////////////
-
+//Declared on Base
+class Inventory {
+	constructor() {
+	}
+}
+//Declared on Base
 class Cart {
 	constructor() {
 		this.cart_products   = []
 		this.total_cart_price= 0
 	}
-
-	addProduct(name,size,price) {
-		this.new_cart_product = new Product(name,size,price)
+	processProduct(id) {
+		this.session=session
+		/**
+		  * Get id from the event (Process Call)
+		  **/
+		this.event = event.target.id
+		/**
+		  * Get selection information ingredient, command and qty in screen
+		  **/
+		this.product= this.event.slice(0, 1)
+		this.size   = this.event.slice(2)
+		/**
+		  * lemon
+		  **/
+		if(this.product===`l`){
+			this.product = `lemon`
+			if(this.size==='small') { this.size=this.session.products[0][1];this.price=this.session.products[0][2]}
+			if(this.size==='medium'){ this.size=this.session.products[1][1];this.price=this.session.products[1][2]}
+			if(this.size==='big')   { this.size=this.session.products[2][1];this.price=this.session.products[2][2]}
+		}
+		/**
+		  * sugar
+		  **/
+		else if(this.product===`s`){
+			this.product = `sugar`
+			if(this.size==='small') { this.size=this.session.products[3][1];this.price=this.session.products[3][2]}
+			if(this.size==='medium'){ this.size=this.session.products[4][1];this.price=this.session.products[4][2]}
+			if(this.size==='big')   { this.size=this.session.products[5][1];this.price=this.session.products[5][2]}
+		}
+		/**
+		  * ice
+		  **/
+		else if(this.product===`i`){
+			this.product = `ice`
+			if(this.size==='small') { this.size=this.session.products[6][1];this.price=this.session.products[6][2]}
+			if(this.size==='medium'){ this.size=this.session.products[7][1];this.price=this.session.products[7][2]}
+			if(this.size==='big')   { this.size=this.session.products[8][1];this.price=this.session.products[8][2]}
+		}
+		/**
+		  * glasses
+		  **/
+		else if(this.product===`g`){
+			this.product = `glass`
+			if(this.size==='small') { this.size=this.session.products[9][1];this.price=this.session.products[9][2]}
+			if(this.size==='medium'){ this.size=this.session.products[10][1];this.price=this.session.products[10][2]}
+			if(this.size==='big')   { this.size=this.session.products[11][1];this.price=this.session.products[11][2]}
+		}
+		/**
+		 * Create product
+		 **/
+		this.new_cart_product = new Product(this.product,this.size,this.price,this.size)
 		/**
 		 * Limit the cart Items
 		 */
-		if (this.cart_products.length <= 9) {
-			this.pushProduct(this.new_cart_product)
+		if (this.session.cart.cart_products.length <= 9) {
+			this.session.cart.pushProduct(this.new_cart_product)
 		}
 		else {
 			this.new_cart_product = '';
 		}
 	}
-
+	/**
+	 * Push product into cart array
+	 **/
 	pushProduct(product) {
 		this.cart_products.push(product);
 		this.total_cart_price += product.price;
@@ -122,7 +160,6 @@ class Cart {
 		document.querySelector(".cart_products").appendChild(this.new_row_name);
 		document.querySelector(".cart_sizes").appendChild(this.new_row_size);
 		document.querySelector(".cart_price").appendChild(this.new_row_price);
-
 	}
 
 	cleanCart() {
@@ -137,8 +174,9 @@ class Cart {
 		this.clean_price.innerHTML                = ''
 		this.clean_total.innerHTML                = 0
 		this.cart_total_title.innerHTML           = 0
-		session.cart.cart_products                = []
-		session.cart.total_cart_price             = 0
+
+		session.cart.cart_products                   = []
+		session.cart.total_cart_price                = 0
 	}
 
 	buyCart() {
@@ -150,9 +188,11 @@ class Cart {
 		this.sugar_total       = 0
 		this.ice_total         = 0
 		this.glass_total       = 0
-
+		/**
+		 * Get totals for inventory
+		 **/
 		for(let i              = 0; i < this.get_lemon.length; i++){
-			this.lemon_total += this.get_lemon[i].size
+			this.lemon_total  += this.get_lemon[i].size
 		}
 		for(let i              = 0; i < this.get_sugar.length; i++){
 			this.sugar_total  += this.get_sugar[i].size
@@ -163,199 +203,117 @@ class Cart {
 		for(let i              = 0; i < this.get_glass.length; i++){
 			this.glass_total  += this.get_glass[i].size
 		}
-		
-		if(session.session_info.money < session.cart.total_cart_price) {
+		/**
+		 * Validate Funds
+		 */
+		if(session.user_info.money < session.cart.total_cart_price) {
 			functions.showMessage('¡Not enought Money!')
 			return
 		}else {
-			session.session_info.money = session.session_info.money - session.cart.total_cart_price
+			session.user_info.money = session.user_info.money - session.cart.total_cart_price
 		}
-
 		session.updateInventory(this.lemon_total,this.sugar_total,this.ice_total,this.glass_total,"inventory_in")
 	}
 }
 
-/////////////////////////////////////////////////////////
-
-class Storage {
-	constructor(lemon,sugar,ice,glasses,alias) {
-		this.lemon                                            = lemon
-		this.sugar                                            = sugar
-		this.ice                                              = ice
-		this.glasses                                          = glasses
-		this.alias                                            = alias
-	}
-	createStorage(lemon,sugar,ice,glasses,alias){
-		this.lemon                                            = lemon
-		this.sugar                                            = sugar
-		this.ice                                              = ice
-		this.glasses                                          = glasses
-		this.alias                                            = alias
-		return [this.lemon,this.sugar,this.ice,this.glasses,this.alias]
-	}
-}
-
-/////////////////////////////////////////////////////////
-
-
-class GameListeners {
-	constructor(){}
-	/**
-	 *RECEPY SELECTION
-	 */
-	addRecepyListeners() {
-		/**
-		 *Lemons
-		 */
-		document.querySelector(".more-l").addEventListener('click', this.recepySelector)
-		document.querySelector(".less-l").addEventListener('click', this.recepySelector)
-		/**
-		 *sugar
-		 */
-		document.querySelector(".more-s").addEventListener('click', this.recepySelector)
-		document.querySelector(".less-s").addEventListener('click', this.recepySelector)
-		/**
-		 *ice
-		 */
-		document.querySelector(".more-i").addEventListener('click', this.recepySelector)
-		document.querySelector(".less-i").addEventListener('click', this.recepySelector)
-		return true
-	}
-	removeRecepyListeners() {
-		/**
-		 *Lemons
-		 */
-		document.querySelector(".more-l").removeEventListener('click', this.recepySelector)
-		document.querySelector(".less-l").removeEventListener('click', this.recepySelector)
-		/**
-		 *sugar
-		 */
-		document.querySelector(".more-s").removeEventListener('click', this.recepySelector)
-		document.querySelector(".less-s").removeEventListener('click', this.recepySelector)
-		/**
-		 *ice
-		 */
-		document.querySelector(".more-i").removeEventListener('click', this.recepySelector)
-		document.querySelector(".less-i").removeEventListener('click', this.recepySelector)
-		return true
-	}
-	/**
-	 *STORE SELECTION
-	 */
-	addStoreListeners() {
-		/**
-		 * Cart Listeners
-		 */
-		document.querySelector(".note-close").addEventListener('click', functions.closeMessage)
-		document.querySelector('.clean_cart').addEventListener('click', this.cart.cleanCart)
-		document.querySelector('.buy').addEventListener('click', this.cart.buyCart)
-		/*
-		 *Lemons
-		 */
-		document.querySelector("#l-small").addEventListener('click', this.addToCart)
-		document.querySelector("#l-medium").addEventListener('click', this.addToCart)
-		document.querySelector("#l-big").addEventListener('click', this.addToCart)
-		/*
-		 *Sugar
-		 */
-		document.querySelector("#s-small").addEventListener('click', this.addToCart)
-		document.querySelector("#s-medium").addEventListener('click', this.addToCart)
-		document.querySelector("#s-big").addEventListener('click', this.addToCart)
-		/*
-		 *Ice
-		 */
-		document.querySelector("#i-small").addEventListener('click', this.addToCart)
-		document.querySelector("#i-medium").addEventListener('click', this.addToCart)
-		document.querySelector("#i-big").addEventListener('click', this.addToCart)
-		/*
-		 *Glasses
-		 */
-		document.querySelector("#g-small").addEventListener('click', this.addToCart)
-		document.querySelector("#g-medium").addEventListener('click', this.addToCart)
-		document.querySelector("#g-big").addEventListener('click', this.addToCart)
-		document.querySelector("#g-big").addEventListener('click', this.addToCart)
-		return true
-	}
-	remodeStoreListeners() {
-		/**
-		 *Lemons
-		 */
-		document.querySelector("#l-small").removeEventListener('click', this.addToCart)
-		document.querySelector("#l-medium").removeEventListener('click', this.addToCart)
-		document.querySelector("#l-big").removeEventListener('click', this.addToCart)
-		/*
-		 *Sugar
-		 */
-		document.querySelector("#s-small").removeEventListener('click', this.addToCart)
-		document.querySelector("#s-medium").removeEventListener('click', this.addToCart)
-		document.querySelector("#s-big").removeEventListener('click', this.addToCart)
-		/*
-		 *Ice
-		 */
-		document.querySelector("#i-small").removeEventListener('click', this.addToCart)
-		document.querySelector("#i-medium").removeEventListener('click', this.addToCart)
-		document.querySelector("#i-big").removeEventListener('click', this.addToCart)
-		/*
-		 *Glasses
-		 */
-		document.querySelector("#g-small").removeEventListener('click', this.addToCart)
-		document.querySelector("#g-medium").removeEventListener('click', this.addToCart)
-		document.querySelector("#g-big").removeEventListener('click', this.addToCart)
-		return true
-	}
-}
-
-/////////////////////////////////////////////////////////
-
-class SessionProcess extends GameListeners {
-	constructor() {
-		super()
-		/**
-		 * Session array collection
-		 */
-		this.stages                = ["start","menu","game","post"]
-		/*
-		 * Declare cart
-		 */
-		this.cart                  = new Cart()
-		/*
-		 * Declare match
-		 */
-		this.match                 = new Match()
-		/*
-		 * Declare clients array
-		 */
-		this.clients_array         = []
+class Base {
+	constructor(name) {
 		/*
 		 * Declare session info
 		 */
-		this.session_info          = []
-		/*
-		 * Declare products
-		 */
-		this.products              = []
-		/*
-		 * Declare user storages sizes
-		 */
-		this.storages              = []
+		this.user_info = new UserInfo()
 		/*
 		 * Declare user storage
 		 */
-		this.session_info.storage  = []
+		this.storage      = new Storage()
 		/*
 		 * Declare Recepy
 		 */
-		this.session_info.recepy   = []
+		this.recepy       = new Recepy()
 		/*
 		 * Declare inventory
 		 */
-		this.session_info.inventory= []
+		this.inventory    = new Inventory()
+		/*
+		 * Declare cart
+		 */
+		this.cart         = new Cart()
+		/*
+		 * Declare products
+		 */
+		this.products     = []
+		/*
+		 * Declare user storages sizes
+		 */
+		this.storages     = []
+		/*
+		 * Declare clients array
+		 */
+		this.clients_array= []
+		/**
+		 * Startup Declarations
+		 */
+	}
+	/**
+	 * Start Game Listeners
+	 */
+	addListeners() {
+		/**
+		 *Lemons
+		 */
+		document.querySelector(".more-l").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".less-l").addEventListener('click', 	this.recepySelector)
+		/**
+		 *sugar
+		 */
+		document.querySelector(".more-s").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".less-s").addEventListener('click', 	this.recepySelector)
+		/**
+		 *ice
+		 */
+		document.querySelector(".more-i").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".less-i").addEventListener('click', 	this.recepySelector)
+		/**
+		 *STORE SELECTION
+		 */
+		/**
+		 * Cart Listeners
+		 */
+		document.querySelector(".note-close").addEventListener('click',	functions.closeMessage)
+		document.querySelector('.clean_cart').addEventListener('click',	this.cart.cleanCart)
+		document.querySelector('.buy_cart').addEventListener('click',		this.cart.buyCart)
+		/*
+		 *Lemons
+		 */
+		document.querySelector("#l-small").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#l-medium").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#l-big").addEventListener('click',		this.cart.processProduct)
+		/*
+		 *Sugar
+		 */
+		document.querySelector("#s-small").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#s-medium").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#s-big").addEventListener('click',		this.cart.processProduct)
+		/*
+		 *Ice
+		 */
+		document.querySelector("#i-small").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#i-medium").addEventListener('click',	this.cart.processProduct)
+		document.querySelector("#i-big").addEventListener('click',		this.cart.processProduct)
+		/*
+		 *Glasses
+		 */
+		document.querySelector("#g-small").addEventListener('click', 	this.cart.processProduct)
+		document.querySelector("#g-medium").addEventListener('click', 	this.cart.processProduct)
+		document.querySelector("#g-big").addEventListener('click', 		this.cart.processProduct)
+		document.querySelector("#g-big").addEventListener('click', 		this.cart.processProduct)
+		return true
 	}
 	/**
 	 * Products declaration
 	 */
 	declareProducts() {
-		let product                                           = new Product()
+		let product = new Product()
 		/**
 		 * Lemon Presentations name,size,price
 		 */
@@ -420,15 +378,14 @@ class SessionProcess extends GameListeners {
 		document.querySelector('.size-qty-g-b').innerHTML     = this.products[11][1]
 		document.querySelector('.product-price-g-b').innerHTML= this.products[11][2]
 
-
-		product                                               = null
+		product = null
 		return true
 	}
 	/**
-	 * Storages declaration
+	 * Storage declaration
 	 */
 	declareStorages() {
-		let storage                                           = new Storage()
+		let storage = new Storage()
 		/*
 		 * Storage Sices                                      : lemon,sugar,ice,glass,alias
 		 */
@@ -437,64 +394,35 @@ class SessionProcess extends GameListeners {
 		this.storages.push(storage.createStorage(35,35,35,40,'big'))
 		this.storages.push(storage.createStorage(50,50,50,50,'special'))
 
-		storage                                               = null
+		storage = null
 		return true
 	}
 	/**
-	 * Local Stats declaration
+	 * New Game Stats declaration
 	 */
-	declareLocalStats(){
+	declareNewGameStats(user){
 		/**
-		 *Recepy
+		 * User
 		 */
-		this.session_info.recepy.lemon   = 0
-		this.session_info.recepy.sugar   = 0
-		this.session_info.recepy.ice     = 0
+		this.user_info.user = user
+		this.user_info.money= 50
+		this.user_info.date = 1
 		/**
-		 *Inventory
+		 * Recepy
 		 */
-		this.session_info.inventory.lemon= 0
-		this.session_info.inventory.sugar= 0
-		this.session_info.inventory.ice  = 0
-		this.session_info.inventory.glass= 0
-		return true
-	}
-	/**
-	 * Update Session Storage - Re-usable
-	 */
-	updateSessionStorage(size){
-		if(size==='small'){
-			this.session_info.storage.lemon= this.storages[0][0]
-			this.session_info.storage.sugar= this.storages[0][1]
-			this.session_info.storage.ice  = this.storages[0][2]
-			this.session_info.storage.glass= this.storages[0][3]
-			this.session_info.storage.alias= this.storages[0][4]
-		}
-		else if(size==='medium'){
-			this.session_info.storage.lemon= this.storages[1][0]
-			this.session_info.storage.sugar= this.storages[1][1]
-			this.session_info.storage.ice  = this.storages[1][2]
-			this.session_info.storage.glass= this.storages[1][3]
-			this.session_info.storage.alias= this.storages[1][4]
-		}
-		else if(size==='big'){
-			this.session_info.storage.lemon= this.storages[2][0]
-			this.session_info.storage.sugar= this.storages[2][1]
-			this.session_info.storage.ice  = this.storages[2][2]
-			this.session_info.storage.glass= this.storages[2][3]
-			this.session_info.storage.alias= this.storages[2][4]
-		}
-		else if(size==='special'){
-			this.session_info.storage.lemon= this.storages[3][0]
-			this.session_info.storage.sugar= this.storages[3][1]
-			this.session_info.storage.ice  = this.storages[3][2]
-			this.session_info.storage.glass= this.storages[3][3]
-			this.session_info.storage.alias= this.storages[3][4]
-		}
-		return true
+		this.recepy.lemon   = 0
+		this.recepy.sugar   = 0
+		this.recepy.ice     = 0
+		/**
+		 * Inventory
+		 */
+		this.inventory.lemon= 0
+		this.inventory.sugar= 0
+		this.inventory.ice  = 0
+		this.inventory.glass= 0
 	}
 	/*
-	 * screen Change functions
+	 * show Menu function
 	 */
 	showMenu() {
 		/**
@@ -506,36 +434,31 @@ class SessionProcess extends GameListeners {
 		functions.showObject(document.querySelector(".stats"))
 		functions.showObject(document.querySelector(".display-menu"))
 		functions.hideObject(document.querySelector(".display-start"))
-
-		return true
 	}
 	/**
 	 * Recepy Selector
 	 */
 	recepySelector(id) {
-
 		/**
 		 * Get id from the event
 		 */
-		this.event            = event.target.id
-
+		this.event    = event.target.id
+		this.recepy   = session.recepy
 		/**
 		 * Get selection information ingredient, command and qty in screen
 		 */
-		this.selection        = this.event.slice(0, -2)
-		this.target           = this.event.slice(-1)
-		this.qty              = document.querySelector(".qty-"+this.target).innerHTML
-
+		this.selection= this.event.slice(0, -2)
+		this.target   = this.event.slice(-1)
+		this.qty      = document.querySelector(".qty-"+this.target).innerHTML
 		/**
 		 * update recepy on screen an on global
 		 */
-		if (this.selection    == 'more' && this.qty < 10){
-			this.qty          = Number(this.qty) + 1
+		if (this.selection==='more' && this.qty < 10){
+			this.qty  = Number(this.qty) + 1
 		}
-		else if(this.selection== 'less' && this.qty > 0) {
-			this.qty          = Number(this.qty) - 1
+		else if(this.selection==='less' && this.qty > 0) {
+			this.qty  = Number(this.qty) - 1
 		}
-
 		/**
 		 * update recepy display
 		 */
@@ -544,132 +467,73 @@ class SessionProcess extends GameListeners {
 		/**
 		 * update the global array
 		 */
+		 console.log(this.recepy)
 		switch (this.target) {
 			case "l": 
-			session.session_info.recepy.lemon= Number(this.qty);
+			this.recepy.lemon= Number(this.qty);
 			break
 
 			case "s": 
-			session.session_info.recepy.sugar= Number(this.qty);
+			this.recepy.sugar= Number(this.qty);
 			break
 
 			case "i": 
-			session.session_info.recepy.ice  = Number(this.qty);
+			this.recepy.ice  = Number(this.qty);
 			break
 
 			default:
 			functions.showMessage('Error!!!')
 			break
 		}
-
-		return
 	}
-	/**
-	 * Cart product addition procces start
-	 */
-	addToCart(id){
-		/**
-		 * Get id from the event
-		 */
-		this.event = event.target.id
-		/**
-		 * Get selection information ingredient, command and qty in screen
-		 */
-		this.product= this.event.slice(0, 1)
-		this.size   = this.event.slice(2)
-		/*
-		 * lemon
-		 */
-		if(this.product===`l`){
-			this.product = `lemon`
-			if(this.size==='small') { this.size=session.products[0][1];this.price=session.products[0][2]}
-			if(this.size==='medium'){ this.size=session.products[1][1];this.price=session.products[1][2]}
-			if(this.size==='big')   { this.size=session.products[2][1];this.price=session.products[2][2]}
-		}
-		/*
-		 * sugar
-		 */
-		else if(this.product===`s`){
-			this.product = `sugar`
-			if(this.size==='small') { this.size=session.products[3][1];this.price=session.products[3][2]}
-			if(this.size==='medium'){ this.size=session.products[4][1];this.price=session.products[4][2]}
-			if(this.size==='big')   { this.size=session.products[5][1];this.price=session.products[5][2]}
-		}
-		/*
-		 * ice
-		 */
-		else if(this.product===`i`){
-			this.product = `ice`
-			if(this.size==='small') { this.size=session.products[6][1];this.price=session.products[6][2]}
-			if(this.size==='medium'){ this.size=session.products[7][1];this.price=session.products[7][2]}
-			if(this.size==='big')   { this.size=session.products[8][1];this.price=session.products[8][2]}
-		}
-		/*
-		 * glasses
-		 */
-		else if(this.product===`g`){
-			this.product = `glass`
-			if(this.size==='small') { this.size=session.products[9][1];this.price=session.products[9][2]}
-			if(this.size==='medium'){ this.size=session.products[10][1];this.price=session.products[10][2]}
-			if(this.size==='big')   { this.size=session.products[11][1];this.price=session.products[11][2]}
-		}
-		/*
-		 * Add to Cart
-		 */
-		session.cart.addProduct(this.product,this.size,this.price)
-		return
-	}
-	/**
-	 * Update Stats Bar
+	/*
+	 * Update bar
 	 */
 	updateBar() {
-		/*
-		 * update bar
-		 */
-		 
-		document.getElementById("Lemons-bar").innerHTML = this.session_info.inventory.lemon
-		document.getElementById("Sugar-bar").innerHTML  = this.session_info.inventory.sugar
-		document.getElementById("Ice-bar").innerHTML    = this.session_info.inventory.ice
-		document.getElementById("Glasses-bar").innerHTML= this.session_info.inventory.glass
-		document.getElementById("Money-bar").innerHTML  = this.session_info.money
-		document.getElementById("Date-bar").innerHTML   = this.session_info.date
-		document.querySelector("#username").innerHTML   = this.session_info.user.toUpperCase()
-		return true
+		document.getElementById("Lemons-bar").innerHTML = this.inventory.lemon
+		document.getElementById("Sugar-bar").innerHTML  = this.inventory.sugar
+		document.getElementById("Ice-bar").innerHTML    = this.inventory.ice
+		document.getElementById("Glasses-bar").innerHTML= this.inventory.glass
+		document.getElementById("Money-bar").innerHTML  = this.user_info.money
+		document.getElementById("Date-bar").innerHTML   = this.user_info.date
+		document.querySelector("#username").innerHTML   = this.user_info.user
 	}
+	/**
+	 * Process any update to the inventory
+	 **/
 	updateInventory(lemon,sugar,ice,glass,movement) {
 		this.lemon   = lemon
 		this.sugar   = sugar
 		this.ice     = ice
 		this.glass   = glass
 		this.movement= movement
-
 		switch (movement) {
 			/**
 			 * Validation on inventory entry
 			 */
 			case 'inventory_in':
-				 // console.log(this.session_info.inventory.ice,this.session_info.storage.ice)
-				this.session_info.inventory.lemon = this.session_info.inventory.lemon + this.lemon
-				this.session_info.inventory.sugar = this.session_info.inventory.sugar + this.sugar
-				this.session_info.inventory.ice   = this.session_info.inventory.ice   + this.ice
-				this.session_info.inventory.glass = this.session_info.inventory.glass + this.glass
+				 // console.log(this.inventory.ice,this.storage.ice)
+				this.inventory.lemon = this.inventory.lemon + this.lemon
+				this.inventory.sugar = this.inventory.sugar + this.sugar
+				this.inventory.ice   = this.inventory.ice   + this.ice
+				this.inventory.glass = this.inventory.glass + this.glass
 				/*
 				 * limit the totals nothing bigger than the storage limits
 				 */
-				if (this.session_info.inventory.lemon > this.session_info.storage.lemon) {
-					this.session_info.inventory.lemon = this.session_info.storage.lemon
+				if (this.inventory.lemon > this.storage.lemon) {
+					this.inventory.lemon = this.storage.lemon
 				}else {
 				}
-				if (this.session_info.inventory.sugar > this.session_info.storage.sugar) {
-					this.session_info.inventory.sugar = this.session_info.storage.sugar
+				if (this.inventory.sugar > this.storage.sugar) {
+					this.inventory.sugar = this.storage.sugar
 				}else {
 				}
-				if (this.session_info.inventory.ice > this.session_info.storage.ice) {
-					this.session_info.inventory.ice = this.session_info.storage.ice
+				if (this.inventory.ice > this.storage.ice) {
+					this.inventory.ice = this.storage.ice
 				}else {
 				}
-				if (this.session_info.inventory.glass > this.session_info.storage.glass) {
-					this.session_info.inventory.glass = this.session_info.storage.glass
+				if (this.inventory.glass > this.storage.glass) {
+					this.inventory.glass = this.storage.glass
 				}else {
 				}
 				break
@@ -677,28 +541,28 @@ class SessionProcess extends GameListeners {
 			 * Validation on inventory out
 			 */
 			case 'inventory_out':
-				this.session_info.inventory.lemon = this.session_info.inventory.lemon - this.lemon
-				this.session_info.inventory.sugar = this.session_info.inventory.sugar - this.sugar
-				this.session_info.inventory.ice   = this.session_info.inventory.ice   - this.ice
-				this.session_info.inventory.glass = this.session_info.inventory.glass - this.glass
+				this.inventory.lemon = this.inventory.lemon - this.lemon
+				this.inventory.sugar = this.inventory.sugar - this.sugar
+				this.inventory.ice   = this.inventory.ice   - this.ice
+				this.inventory.glass = this.inventory.glass - this.glass
 				/*
 				 *limit the totals nothing smaller than 0
 				 */
-				 console.log(this.session_info.inventory.lemon,this.session_info.storage.lemon)
-				if (this.session_info.inventory.lemon < 0) {
-					this.session_info.inventory.lemon = 0
+				 console.log(this.inventory.lemon,this.storage.lemon)
+				if (this.inventory.lemon < 0) {
+					this.inventory.lemon = 0
 					alert('You run out lemons')
 				}
-				else if (this.session_info.inventory.sugar < 0) {
-					this.session_info.inventory.sugar = 0
+				else if (this.inventory.sugar < 0) {
+					this.inventory.sugar = 0
 					alert('You run out sugar')
 				}
-				else if (this.session_info.inventory.ice < 0) {
-					this.session_info.inventory.ice = 0
+				else if (this.inventory.ice < 0) {
+					this.inventory.ice = 0
 					alert('You run out ice')
 				}
-				else if (this.session_info.inventory.glass < 0) {
-					this.session_info.inventory.glass = 0
+				else if (this.inventory.glass < 0) {
+					this.inventory.glass = 0
 					alert('You run out glass')
 				}
 				break
@@ -709,100 +573,58 @@ class SessionProcess extends GameListeners {
 	}
 }
 
-/////////////////////////////////////////////////////////
-
-class Session extends SessionProcess {
-	constructor(user) {
+class Session extends Base{
+	constructor(user){
 		super()
 		/**
-		 * Start the process
+		 * Add listeners and declare constants
 		 */
-		this.start(user)
+		this.engineInitializer()
+		/**
+		 * Detect a saved game or start a New game
+		 */
+		if(this.detectSavedGame()===true){
+			this.loadSavedGame(savedGame)
+		}else {
+			this.startNewGame(user)
+		}
 	}
 
-	start(user){
-		/**
-		 * Start Stage
-		 */
-		this.session_info.stage    = this.stages[0]
-		/**
-		 * User initial Declaration
-		 */
-		this.session_info.user     = user
-		/**
-		 * Update initial money
-		 */
-		this.session_info.money    = 50
-		/**
-		 * Update initial date
-		 */
-		this.session_info.date     = 1
-		/**
-		 *
-		 * Declarations
-		 *
-		 */
-		if (this.declareProducts()!==true) {
-			alert('Problem in Product declaration')
-		}
-		if (this.declareStorages()!==true) {
-			alert('Problem in Storages declaration')
-		}
-		if (this.updateSessionStorage('small')!==true) {
-			alert('Problem session storage declaration')
-		}
-		if (this.declareLocalStats()!==true) {
-			alert('Problem initializing recepy and/or inventory')
-		}
-		if (this.updateBar()!==true) {
-			alert('Problem updating the bar')
-		}
-		/**
-		 * go to Menu
-		 */
-		this.Menu()
+	engineInitializer(){
+		this.addListeners()
+		this.declareProducts()
+		this.declareStorages()
 	}
 
-	Menu() {
-		this.session_info.stage = this.stages[1]
+	detectSavedGame() {
 		/**
-		 * Go for Menu Printing
-		 */
-		if (this.showMenu()!==true) {
-			alert('Problem displaying the menu')
+		 * if a saved game exist return true
+		 **/
+		if(savedGame!==undefined){
+			return true
+		}else {
+			return false
 		}
-		/**
-		 * Process Recepy Listeners
-		 */
-		if (this.addRecepyListeners()!==true) {
-			alert('Problem adding recepy listeners')
-		}
-		/**
-		 * Process Store Listeners
-		 */
-		if (this.addStoreListeners()!==true){
-			alert('Problem adding stores listeners')
-		}
+	}
+
+	loadSavedGame(savedGame) {
+		this.savedGame = savedGame
+		this.updateBar()
+	}
+
+	startNewGame(user) {
+		this.declareNewGameStats(user)
+		this.showMenu()
+		this.updateBar()
 	}
 }
 
+
 (function () {
 	function startGame(event) {
-		if (!event.target || !event.target.value) {
-			return;
-		}
 		session = new Session(event.target.value)
-		/**
-		 * Save game constantly
-		 */
-		 setInterval(function(){ 
-		 	console.log('game saved')
-		}, 1000);
-		console.log(session)
+		// console.log(session)
 	}
-	// ;localStorage.setItem('save', session);
-	console.log(session)
-
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
 })();

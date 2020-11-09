@@ -87,9 +87,25 @@ h1, h2, h3, h4, h5 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #5ba75a;
+  background: url(../images/grass_template2.jpg);
+  background-size: cover;
   font-family: "Press Start 2P", cursive;
   position: relative;
+}
+@media (max-width : 1034px) {
+  #app {
+    padding: 105px 0px 40px;
+  }
+}
+@media (max-width : 716px) {
+  #app {
+    padding: 150px 0px 40px;
+  }
+}
+@media (max-width : 390px) {
+  #app {
+    padding: 190px 0px 40px;
+  }
 }
 
 textarea, a {
@@ -132,32 +148,55 @@ textarea, a {
   padding: 15px 0px;
 }
 
-.display-menu {
-  padding: 10% 0px;
-}
 .display-menu .container {
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-around;
 }
 .display-menu .container .recepy-card {
-  flex: 1 70%;
+  flex: 1 30%;
+  max-width: 25%;
 }
 .display-menu .container .store-card {
-  flex: 1 70%;
-  order: 3;
+  flex: 1 30%;
+  max-width: 25%;
+  min-width: 220px;
 }
 .display-menu .container .cart-card {
   flex: 1 30%;
-  order: 2;
+  max-width: 25%;
+  min-width: 292.5px;
+  margin: 0px 5%;
 }
-.display-menu .container .start {
+.display-menu .container .menu-buttons {
   flex: 1 100%;
-  order: 4;
+  padding: 10px 0px;
+  order: 5;
+}
+.display-menu .container .menu-buttons .pointer {
+  border-radius: 8px;
+  padding: 10px 0px;
+  min-width: 360px;
+  max-width: 80%;
+  margin: 0px auto 10px;
+}
+.display-menu .container .menu-buttons .pointer:last-child {
+  margin-bottom: 0px;
+}
+.display-menu .container .menu-buttons .clean_cart:after {
+  transform: translate(10px, -3px);
+  display: inline-block;
+  content: "🗑️";
+}
+.display-menu .container .menu-buttons .buy_cart:after {
+  transform: translate(10px, -3px);
+  display: inline-block;
+  content: "💸";
 }
 .display-menu .container .menu-card .title {
   font-size: 15px;
   text-align: center;
-  padding: 20px 0px;
+  padding-bottom: 20px;
 }
 @media (max-width : 768px) {
   .display-menu .container .recepy-card, .display-menu .container .store-card, .display-menu .container .cart-card {
@@ -171,21 +210,6 @@ textarea, a {
   }
   .display-menu .container .start {
     order: 4;
-  }
-}
-@media (max-width : 1034px) {
-  .display-menu {
-    padding: 105px 0px 40px;
-  }
-}
-@media (max-width : 716px) {
-  .display-menu {
-    padding: 150px 0px 40px;
-  }
-}
-@media (max-width : 390px) {
-  .display-menu {
-    padding: 190px 0px 40px;
   }
 }
 
@@ -266,7 +290,7 @@ textarea, a {
   align-items: center;
   justify-content: center;
 }
-@media (max-width : 1034px) {
+@media (max-width : 1235px) {
   .app-header .navbar {
     align-items: center;
     flex-direction: column;
@@ -287,9 +311,7 @@ textarea, a {
 }
 .recepy-card .menu-container {
   display: flex;
-  justify-content: space-around;
-  height: 70%;
-  align-items: center;
+  flex-flow: row wrap;
 }
 .recepy-card .menu-container .box {
   display: flex;
@@ -397,9 +419,10 @@ textarea, a {
 }
 .cart-card .cart-list {
   display: flex;
-  min-height: 240px;
+  min-height: 255px;
   padding: 10px;
-  background: rgba(210, 255, 136, 0.5);
+  background: #efebe8;
+  border: 3px solid #292929;
   border-radius: 8px;
 }
 .cart-card .cart-list .cart-item-list {
@@ -408,13 +431,10 @@ textarea, a {
   flex: 1 33%;
 }
 .cart-card .cart-list .cart-item-list span {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid gray;
 }
-.cart-card .cart-list .cart-item-list:nth-child(1) span {
-  border-radius: 10px 0% 0% 10px;
-}
-.cart-card .cart-list .cart-item-list:nth-child(3) span {
-  border-radius: 0px 10px 10px 0px;
+.cart-card .cart-list .cart-item-list span:last-child {
+  border-bottom: none;
 }
 .cart-card .cart-list .cart-item-list > * {
   background: #efebe8;
@@ -424,21 +444,6 @@ textarea, a {
 .cart-card .totals {
   text-align: right;
   margin: 10px 60px;
-}
-.cart-card .totals .pointer {
-  padding: 10px 0px;
-  border-radius: 8px;
-}
-.cart-card .totals .clean_cart {
-  margin: 20px auto 10px;
-}
-.cart-card .totals .clean_cart:after {
-  transform: translate(10px, -3px);
-  display: inline-block;
-  content: "🗑️";
-}
-.cart-card .totals .buy {
-  margin: 0px auto 20px;
 }
 
 .app-footer {

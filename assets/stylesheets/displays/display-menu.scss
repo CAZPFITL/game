@@ -1,33 +1,71 @@
 .display-menu { 
-	padding                 : 10% 0px;
+
 	.container { 
-		display             : flex;
-		flex-flow           : row wrap;
+		display                   : flex;
+		flex-flow                 : row wrap;
+		justify-content           : space-around;
 
 		.recepy-card { 
-			flex            : 1 70%;
+			flex                  : 1 30%;
+			max-width             : 25%;
 		}
 
 		.store-card { 
-			flex            : 1 70%;
-			order           : 3;
+			flex                  : 1 30%;
+			max-width             : 25%;
+			min-width             : 220px;
 		}
 
 		.cart-card { 
-			flex            : 1 30%;
-			order           : 2;
+			flex                  : 1 30%;
+			max-width             : 25%;
+			min-width             : 292.5px;
+			margin                : 0px 5%;
 		}
 
-		.start { 
-			flex            : 1 100%;
-			order           : 4;
+		.menu-buttons {
+			flex                  : 1 100%;
+			padding               : 10px 0px;
+			order                 : 5;
+
+			.pointer { 
+				border-radius     : 8px;
+				padding           : 10px 0px;
+				min-width         : 360px;
+				max-width         : 80%;
+				margin            : 0px auto 10px;
+
+				&:last-child {
+					margin-bottom : 0px;
+				}
+
+			}
+
+			.clean_cart { 
+
+				&:after {
+					transform     : translate(10px, -3px);
+					display       : inline-block;
+					content       : "🗑️";
+				}
+
+			}
+
+			.buy_cart {
+				&:after {
+					transform     : translate(10px, -3px);
+					display       : inline-block;
+					content       : "💸";
+				}
+			}
+
 		}
 
 		.menu-card {
 			.title {
-				font-size   : 15px;
-				text-align  : center;
-				padding     : 20px 0px;
+				font-size         : 15px;
+				text-align        : center;
+				padding-bottom    : 20px;
 			}
 
 		}
@@ -38,27 +76,19 @@
 		.container {
 
 			.recepy-card,.store-card,.cart-card  {
-				flex        : 1 100%;
+				flex              : 1 100%;
 			}
 			.store-card { 
-				order       : 2;
+				order             : 2;
 			}
 			.cart-card { 
-				order       : 3;
+				order             : 3;
 			}
 			.start { 
-				order       : 4;
+				order             : 4;
 			}
 
 		}
 	}
-	@media("max-width       : 1034px"){
-		padding             : 105px 0px 40px;
-	}
-	@media("max-width       : 716px"){
-		padding             : 150px 0px 40px;
-	}
-	@media("max-width       : 390px") {
-		padding             : 190px 0px 40px;
-	}
+
 }
