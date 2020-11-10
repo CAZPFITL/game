@@ -1,6 +1,15 @@
+//----------------------------------------------
+/**
+ * Game variables declaration
+ */
+//----------------------------------------------
 let session
 let savedGame
-
+//----------------------------------------------
+/**
+ * Game global Functions declaration
+ */
+//----------------------------------------------
 let functions  = {
 	anyNumber  : function(number) {
 		return Math.floor(Math.random() * Math.floor(number))
@@ -24,14 +33,15 @@ let functions  = {
 		console.log('saved')
 	}
 }
-
-//Declared on Base
+//----------------------------------------------
+/**
+ * Classes Declared on Base
+ */
+//----------------------------------------------
 class UserInfo {
 	constructor() {
 	}
 }
-
-//Declared on Base
 class Storage {
 	constructor() {
 	}
@@ -45,13 +55,11 @@ class Storage {
 	}
 }
 
-//Declared on Base
 class Recepy {
 	constructor() {
 	}
 }
 
-//Declared on Base
 class Product {
 	constructor(name,size,price,alias) {
 		this.name = name
@@ -68,13 +76,15 @@ class Product {
 	}
 }
 
-//Declared on Base
 class Inventory {
 	constructor() {
 	}
 }
-
-//Declared on Base
+//----------------------------------------------
+/**
+ * Game Cart
+ */
+//----------------------------------------------
 class Cart {
 	constructor() {
 		this.cart_products   = []
@@ -228,7 +238,11 @@ class Cart {
 		functions.saveGame(session)
 	}
 }
-
+//----------------------------------------------
+/**
+ * Game Class Base
+ */
+//----------------------------------------------
 class Base {
 	constructor(name) {
 		/*
@@ -620,7 +634,11 @@ class Base {
 		return true
 	}
 }
-
+//----------------------------------------------
+/**
+ * Session Class
+ */
+//----------------------------------------------
 class Session extends Base{
 	constructor(user){
 		super()
@@ -638,8 +656,6 @@ class Session extends Base{
 			alert('not-detected')
 			this.startNewGame(user)
 		}
-		/* this.startNewGame(user) */
-
 	}
 
 	engineInitializer(){
@@ -663,7 +679,10 @@ class Session extends Base{
 			return false
 		}
 	}
-
+	
+	/**
+	 * Load saved game process
+	 **/
 	loadSavedGame(savedGame) {
 		this.user_info    = savedGame.user_info
 		this.storage      = savedGame.storage
@@ -673,9 +692,6 @@ class Session extends Base{
 		this.products     = savedGame.products
 		this.storages     = savedGame.storages
 		this.clients_array= savedGame.clients_array
-		/**
-		 * Load saved game process
-		 **/
 		this.showMenu()
 		this.updateBar()
 	}
@@ -687,11 +703,11 @@ class Session extends Base{
 		this.updateBar()
 	}
 }
-
-// update storage size on new game function 
-// validar si es necesario borrar update session storage o cambiar la palabra enviada
-
-
+//----------------------------------------------
+/**
+ * On start Functions
+ */
+//----------------------------------------------
 (function () {
 	function startGame(event) {
 		session = new Session(event.target.value)
