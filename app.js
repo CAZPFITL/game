@@ -663,25 +663,8 @@ class Session extends Base{
 	function startGame(event) {
 		session = new Session(event.target.value)
 		console.log(session)
+		console.log('test')
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
