@@ -404,22 +404,23 @@ class Base {
 		/**
 		 * User
 		 */
-		this.user_info.user = user
-		this.user_info.money= 50
-		this.user_info.date = 1
+		this.user_info.user       = user
+		this.user_info.money      = 50
+		this.user_info.date       = 1
+		this.user_info.storageSize= 'small'
 		/**
 		 * Recepy
 		 */
-		this.recepy.lemon   = 0
-		this.recepy.sugar   = 0
-		this.recepy.ice     = 0
+		this.recepy.lemon         = 0
+		this.recepy.sugar         = 0
+		this.recepy.ice           = 0
 		/**
 		 * Inventory
 		 */
-		this.inventory.lemon= 0
-		this.inventory.sugar= 0
-		this.inventory.ice  = 0
-		this.inventory.glass= 0
+		this.inventory.lemon      = 0
+		this.inventory.sugar      = 0
+		this.inventory.ice        = 0
+		this.inventory.glass      = 0
 	}
 	/*
 	 * show Menu function
@@ -496,7 +497,7 @@ class Base {
 		document.getElementById("Glasses-bar").innerHTML= this.inventory.glass
 		document.getElementById("Money-bar").innerHTML  = this.user_info.money
 		document.getElementById("Date-bar").innerHTML   = this.user_info.date
-		document.querySelector("#username").innerHTML   = this.user_info.user
+		document.querySelector("#username").innerHTML   = this.user_info.user.toUpperCase()
 	}
 	/**
 	 * Process any update to the inventory
@@ -571,6 +572,40 @@ class Base {
 		this.updateBar()
 		this.cart.cleanCart()
 	}
+	/**
+	 * Update Stogare size.
+	 **/
+	updateSessionStorage(size){
+		if(size==='small'){
+			this.storage.lemon= this.storages[0][0]
+			this.storage.sugar= this.storages[0][1]
+			this.storage.ice  = this.storages[0][2]
+			this.storage.glass= this.storages[0][3]
+			this.storage.alias= this.storages[0][4]
+		}
+		else if(size==='medium'){
+			this.storage.lemon= this.storages[1][0]
+			this.storage.sugar= this.storages[1][1]
+			this.storage.ice  = this.storages[1][2]
+			this.storage.glass= this.storages[1][3]
+			this.storage.alias= this.storages[1][4]
+		}
+		else if(size==='big'){
+			this.storage.lemon= this.storages[2][0]
+			this.storage.sugar= this.storages[2][1]
+			this.storage.ice  = this.storages[2][2]
+			this.storage.glass= this.storages[2][3]
+			this.storage.alias= this.storages[2][4]
+		}
+		else if(size==='special'){
+			this.storage.lemon= this.storages[3][0]
+			this.storage.sugar= this.storages[3][1]
+			this.storage.ice  = this.storages[3][2]
+			this.storage.glass= this.storages[3][3]
+			this.storage.alias= this.storages[3][4]
+		}
+		return true
+	}
 }
 
 class Session extends Base{
@@ -614,17 +649,39 @@ class Session extends Base{
 
 	startNewGame(user) {
 		this.declareNewGameStats(user)
+		this.updateSessionStorage(this.user_info.storageSize)
 		this.showMenu()
 		this.updateBar()
 	}
 }
 
+// update storage size on new game function 
+// validar si es necesario borrar update session storage o cambiar la palabra enviada
+
 
 (function () {
 	function startGame(event) {
 		session = new Session(event.target.value)
-		// console.log(session)
+		console.log(session)
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

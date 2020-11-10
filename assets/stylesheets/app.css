@@ -75,9 +75,19 @@ h1, h2, h3, h4, h5 {
   max-width: 1170px;
   margin: auto;
 }
-@media (max-width : 1170px) {
+@media (max-width : 1250px) {
   .container {
-    padding: 0px 20px;
+    padding: 105px 0px 40px;
+  }
+}
+@media (max-width : 945px) {
+  .container {
+    padding: 150px 0px 40px;
+  }
+}
+@media (max-width : 530px) {
+  .container {
+    padding: 190px 0px 40px;
   }
 }
 
@@ -91,21 +101,6 @@ h1, h2, h3, h4, h5 {
   background-size: cover;
   font-family: "Press Start 2P", cursive;
   position: relative;
-}
-@media (max-width : 1034px) {
-  #app {
-    padding: 105px 0px 40px;
-  }
-}
-@media (max-width : 716px) {
-  #app {
-    padding: 150px 0px 40px;
-  }
-}
-@media (max-width : 390px) {
-  #app {
-    padding: 190px 0px 40px;
-  }
 }
 
 textarea, a {
@@ -329,12 +324,12 @@ textarea, a {
 .recepy-card .menu-container .box .level {
   display: flex;
   align-items: center;
-  margin: 20px 0px;
+  margin: 0px 0px 15px;
 }
 .recepy-card .menu-container .box .level .pointer {
   font-size: 35px;
   width: 37px;
-  height: 37px;
+  height: 35px;
   line-height: 35px;
   border-radius: 50%;
 }

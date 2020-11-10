@@ -25,8 +25,14 @@
 	max-width         : 1170px;
 	margin            : auto;
 
-	@media("max-width : 1170px") {
-		padding       : 0px 20px;
+	@media("max-width             : 1250px"){
+		padding                   : 105px 0px 40px;
+	}
+	@media("max-width             : 945px"){
+		padding                   : 150px 0px 40px;
+	}
+	@media("max-width             : 530px") {
+		padding                   : 190px 0px 40px;
 	}
 
 }
@@ -42,15 +48,7 @@
 	background-size   : cover;
 	font-family       : $font-secondary;
 	position          : relative;
-	@media("max-width             : 1034px"){
-		padding                   : 105px 0px 40px;
-	}
-	@media("max-width             : 716px"){
-		padding                   : 150px 0px 40px;
-	}
-	@media("max-width             : 390px") {
-		padding                   : 190px 0px 40px;
-	}
+
 }
 
 textarea,a {

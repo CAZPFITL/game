@@ -620,7 +620,7 @@ class SessionProcess extends GameListeners {
 		document.getElementById("Glasses-bar").innerHTML= this.inventory.glass
 		document.getElementById("Money-bar").innerHTML  = this.session_info.money
 		document.getElementById("Date-bar").innerHTML   = this.session_info.date
-		document.querySelector("#username").innerHTML   = this.session_info.user
+		document.querySelector("#username").innerHTML   = this.session_info.user.toUpperCase();
 		return true
 	}
 	updateInventory(lemon,sugar,ice,glass,movement) {
