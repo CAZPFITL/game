@@ -18,6 +18,9 @@ let functions  = {
 	},
 	closeMessage : function(){
 		document.querySelector(".note-wrapper").classList.add("hide")
+	},
+	saveGame : function(session){
+		localStorage.setItem('save', JSON.stringify(session));
 	}
 }
 //Declared on Base
@@ -619,8 +622,10 @@ class Session extends Base{
 		 * Detect a saved game or start a New game
 		 */
 		if(this.detectSavedGame()===true){
+			alert('detected')
 			this.loadSavedGame(savedGame)
 		}else {
+			alert('not-detected')
 			this.startNewGame(user)
 		}
 	}
@@ -663,7 +668,7 @@ class Session extends Base{
 	function startGame(event) {
 		session = new Session(event.target.value)
 		console.log(session)
-		console.log('test')
+		savedGame = localStorage.getItem('save')
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
