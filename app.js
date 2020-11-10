@@ -21,13 +21,16 @@ let functions  = {
 	},
 	saveGame : function(session){
 		localStorage.setItem('save', JSON.stringify(session));
+		console.log('saved')
 	}
 }
+
 //Declared on Base
 class UserInfo {
 	constructor() {
 	}
 }
+
 //Declared on Base
 class Storage {
 	constructor() {
@@ -41,11 +44,13 @@ class Storage {
 		return [this.lemon,this.sugar,this.ice,this.glasses,this.alias]
 	}
 }
+
 //Declared on Base
 class Recepy {
 	constructor() {
 	}
 }
+
 //Declared on Base
 class Product {
 	constructor(name,size,price,alias) {
@@ -62,11 +67,13 @@ class Product {
 		return [this.name,this.size,this.price,this.alias]
 	}
 }
+
 //Declared on Base
 class Inventory {
 	constructor() {
 	}
 }
+
 //Declared on Base
 class Cart {
 	constructor() {
@@ -163,6 +170,7 @@ class Cart {
 		document.querySelector(".cart_products").appendChild(this.new_row_name);
 		document.querySelector(".cart_sizes").appendChild(this.new_row_size);
 		document.querySelector(".cart_price").appendChild(this.new_row_price);
+		functions.saveGame(session)
 	}
 
 	cleanCart() {
@@ -180,6 +188,7 @@ class Cart {
 
 		session.cart.cart_products                   = []
 		session.cart.total_cart_price                = 0
+		functions.saveGame(session)
 	}
 
 	buyCart() {
@@ -216,6 +225,7 @@ class Cart {
 			session.user_info.money = session.user_info.money - session.cart.total_cart_price
 		}
 		session.updateInventory(this.lemon_total,this.sugar_total,this.ice_total,this.glass_total,"inventory_in")
+		functions.saveGame(session)
 	}
 }
 
@@ -621,13 +631,15 @@ class Session extends Base{
 		/**
 		 * Detect a saved game or start a New game
 		 */
-		if(this.detectSavedGame()===true){
+ 		if(this.detectSavedGame()===true){
 			alert('detected')
 			this.loadSavedGame(savedGame)
 		}else {
 			alert('not-detected')
 			this.startNewGame(user)
 		}
+		/* this.startNewGame(user) */
+
 	}
 
 	engineInitializer(){
@@ -637,6 +649,11 @@ class Session extends Base{
 	}
 
 	detectSavedGame() {
+		/**
+		 * Load savedGame localstorage-variable
+		 **/
+		savedGame = localStorage.getItem('save')
+		savedGame = JSON.parse(savedGame)
 		/**
 		 * if a saved game exist return true
 		 **/
@@ -648,7 +665,18 @@ class Session extends Base{
 	}
 
 	loadSavedGame(savedGame) {
-		this.savedGame = savedGame
+		this.user_info    = savedGame.user_info
+		this.storage      = savedGame.storage
+		this.recepy       = savedGame.recepy
+		this.inventory    = savedGame.inventory
+		this.cart         = savedGame.cart
+		this.products     = savedGame.products
+		this.storages     = savedGame.storages
+		this.clients_array= savedGame.clients_array
+		/**
+		 * Load saved game process
+		 **/
+		this.showMenu()
 		this.updateBar()
 	}
 
@@ -668,7 +696,6 @@ class Session extends Base{
 	function startGame(event) {
 		session = new Session(event.target.value)
 		console.log(session)
-		savedGame = localStorage.getItem('save')
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
