@@ -31,6 +31,7 @@ let functions  = {
 	saveGame : function(session){
 		localStorage.setItem('save', JSON.stringify(session));
 		console.log('saved')
+		console.log(session)
 	}
 }
 //----------------------------------------------
@@ -288,18 +289,18 @@ class Base {
 		/**
 		 *Lemons
 		 */
-		document.querySelector(".more-l").addEventListener('click', 	this.recepySelector)
-		document.querySelector(".less-l").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".more-l").addEventListener('click', 	this.recepyListenerSelector)
+		document.querySelector(".less-l").addEventListener('click', 	this.recepyListenerSelector)
 		/**
 		 *sugar
 		 */
-		document.querySelector(".more-s").addEventListener('click', 	this.recepySelector)
-		document.querySelector(".less-s").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".more-s").addEventListener('click', 	this.recepyListenerSelector)
+		document.querySelector(".less-s").addEventListener('click', 	this.recepyListenerSelector)
 		/**
 		 *ice
 		 */
-		document.querySelector(".more-i").addEventListener('click', 	this.recepySelector)
-		document.querySelector(".less-i").addEventListener('click', 	this.recepySelector)
+		document.querySelector(".more-i").addEventListener('click', 	this.recepyListenerSelector)
+		document.querySelector(".less-i").addEventListener('click', 	this.recepyListenerSelector)
 		/**
 		 *STORE SELECTION
 		 */
@@ -427,14 +428,14 @@ class Base {
 	/**
 	 * New Game Stats declaration
 	 */
-	declareNewGameStats(user,money,date){
+	declareNewGameStats(user,money,date,storageSize){
 		/**
 		 * User
 		 */
 		this.user_info.user       = user
-		this.user_info.money      = 50
-		this.user_info.date       = 1
-		this.user_info.storageSize= 'small'
+		this.user_info.money      = money
+		this.user_info.date       = date
+		this.user_info.storageSize= storageSize
 		/**
 		 * Recepy
 		 */
@@ -462,11 +463,28 @@ class Base {
 		functions.showObject(document.querySelector(".stats"))
 		functions.showObject(document.querySelector(".display-menu"))
 		functions.hideObject(document.querySelector(".display-start"))
+		
+		this.updateBar()
+	}
+	/*
+	 * Update bar
+	 */
+	updateBar() {
+		document.getElementById("Lemons-bar").innerHTML = this.inventory.lemon
+		document.getElementById("Sugar-bar").innerHTML  = this.inventory.sugar
+		document.getElementById("Ice-bar").innerHTML    = this.inventory.ice
+		document.getElementById("Glasses-bar").innerHTML= this.inventory.glass
+		document.getElementById("Money-bar").innerHTML  = this.user_info.money
+		document.getElementById("Date-bar").innerHTML   = this.user_info.date
+		document.querySelector("#username").innerHTML   = this.user_info.user.toUpperCase()
+	}
+	updateMenu(){
+
 	}
 	/**
 	 * Recepy Selector
 	 */
-	recepySelector(id) {
+	recepyListenerSelector(id) {
 		/**
 		 * Get id from the event
 		 */
@@ -492,10 +510,7 @@ class Base {
 		 */
 		document.querySelector(".qty-"+this.target).innerHTML = ""
 		document.querySelector(".qty-"+this.target).innerHTML = this.qty
-		/**
-		 * update the global array
-		 */
-		 console.log(this.recepy)
+
 		switch (this.target) {
 			case "l": 
 			this.recepy.lemon= Number(this.qty);
@@ -514,22 +529,10 @@ class Base {
 			break
 		}
 	}
-	/*
-	 * Update bar
-	 */
-	updateBar() {
-		document.getElementById("Lemons-bar").innerHTML = this.inventory.lemon
-		document.getElementById("Sugar-bar").innerHTML  = this.inventory.sugar
-		document.getElementById("Ice-bar").innerHTML    = this.inventory.ice
-		document.getElementById("Glasses-bar").innerHTML= this.inventory.glass
-		document.getElementById("Money-bar").innerHTML  = this.user_info.money
-		document.getElementById("Date-bar").innerHTML   = this.user_info.date
-		document.querySelector("#username").innerHTML   = this.user_info.user.toUpperCase()
-	}
 	/**
 	 * Process any update to the inventory
 	 **/
-	updateInventory(lemon,sugar,ice,glass,movement) {
+	 updateInventory(lemon,sugar,ice,glass,movement) {
 		this.lemon   = lemon
 		this.sugar   = sugar
 		this.ice     = ice
@@ -540,7 +543,6 @@ class Base {
 			 * Validation on inventory entry
 			 */
 			case 'inventory_in':
-				 // console.log(this.inventory.ice,this.storage.ice)
 				this.inventory.lemon = this.inventory.lemon + this.lemon
 				this.inventory.sugar = this.inventory.sugar + this.sugar
 				this.inventory.ice   = this.inventory.ice   + this.ice
@@ -600,7 +602,7 @@ class Base {
 		this.cart.cleanCart()
 	}
 	/**
-	 * Update Stogare size.
+	 * Update Stogare size. used in load and new game and storage upgrade to update the storage size
 	 **/
 	updateSessionStorage(size){
 		if(size==='small'){
@@ -666,14 +668,9 @@ class Session extends Base{
 	}
 
 	detectSavedGame() {
-		/**
-		 * Load savedGame localstorage-variable
-		 **/
 		savedGame = localStorage.getItem('save')
 		savedGame = JSON.parse(savedGame)
-		/**
-		 * if a saved game exist return true
-		 **/
+
 		if(savedGame!==null||savedGame===undefined){
 			return true
 		}else {
@@ -682,28 +679,28 @@ class Session extends Base{
 	}
 	
 	/**
-	 * Load saved game process
+	 * Load Saved Game Process
 	 **/
 	loadSavedGame(savedGame) {
-		this.declareNewGameStats(savedGame.user_info.user,savedGame.user_info.money,savedGame.user_info.date)
+		this.declareNewGameStats(savedGame.user_info.user,savedGame.user_info.money,savedGame.user_info.date,savedGame.user_info.storageSize)
 		this.updateSessionStorage(savedGame.storage.alias)
-		this.storage      = savedGame.storage
-		this.recepy       = savedGame.recepy
+		this.recepy.lemon = savedGame.recepy.lemon
+		this.recepy.sugar = savedGame.recepy.sugar
+		this.recepy.ice   = savedGame.recepy.ice
 		this.inventory    = savedGame.inventory
-		this.products     = savedGame.products
-		this.storages     = savedGame.storages
-		this.clients_array= savedGame.clients_array
+		this.cart.cart_products = savedGame.cart.cart_products
 		this.showMenu()
-		this.updateBar()
 	}
-
+	/**
+	 * Start New Game Process
+	 */
 	startNewGame(user) {
-		this.declareNewGameStats(user,100,1)
+		this.declareNewGameStats(user,100,1,'small')
 		this.updateSessionStorage(this.user_info.storageSize)
 		this.showMenu()
-		this.updateBar()
 	}
 }
+
 //----------------------------------------------
 /**
  * On start Functions
