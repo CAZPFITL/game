@@ -237,6 +237,7 @@ class Cart {
 		}
 		session.updateInventory(this.lemon_total, this.sugar_total, this.ice_total, this.glass_total, "add")
 		functions.saveGame(session)
+		session.cart.cleanCart()
 	}
 }
 //----------------------------------------------
@@ -453,7 +454,6 @@ class Base {
 		this.inventory.sugar = i_sugar
 		this.inventory.ice = i_ice
 		this.inventory.glass = i_glass
-		/* this.updateInventory(i_lemon, i_sugar, i_ice, i_glass, "add") */
 	}
 	/*
 	 * show Menu function
@@ -498,7 +498,7 @@ class Base {
 		/**
 		 * Get id from the event
 		 */
-		this.event = event.target.id
+		this.event = target.id
 		this.recepy = session.recepy
 		/**
 		 * Get selection information ingredient, command and qty in screen
@@ -636,9 +636,8 @@ class Base {
 				}
 				break
 		}
-
 		this.updateBar()
-		this.cart.cleanCart()
+
 	}
 	/**
 	 * Update Stogare size. used in load and new game and storage upgrade to update the storage size
@@ -721,20 +720,21 @@ class Session extends Base {
 	 * Load Saved Game Process
 	 **/
 	loadSavedGame(savedGame) {
-		this.declareGameStats(
-			savedGame.user_info.user,
-			savedGame.user_info.money,
-			savedGame.user_info.date,
-			savedGame.user_info.storageSize,
-			savedGame.recepy.lemon,
-			savedGame.recepy.sugar,
-			savedGame.recepy.ice,
-			savedGame.inventory.lemon,
-			savedGame.inventory.sugar,
-			savedGame.inventory.ice,
-			savedGame.inventory.glass
-		)
+		this.a = savedGame.user_info.user,
+		this.b = savedGame.user_info.money,
+		this.c = savedGame.user_info.date,
+		this.d = savedGame.user_info.storageSize,
+		this.e = savedGame.recepy.lemon,
+		this.f = savedGame.recepy.sugar,
+		this.g = savedGame.recepy.ice,
+		this.h = savedGame.inventory.lemon,
+		this.i = savedGame.inventory.sugar,
+		this.j = savedGame.inventory.ice,
+		this.k = savedGame.inventory.glass
 		this.cart.cart_products = savedGame.cart.cart_products
+
+		this.declareGameStats('0',100,1,'small',0,0,0,0,0,0,0)
+		this.declareGameStats(this.a,this.b,this.c,this.d,this.e,this.f,this.g,this.h,this.i,this.j,this.k)
 		this.showMenu()
 	}
 	/**
