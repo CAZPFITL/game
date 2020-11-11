@@ -30,7 +30,7 @@ let functions = {
 	},
 	saveGame: function(session) {
 		localStorage.setItem('save', JSON.stringify(session));
-		console.log('saved')
+		alert('saved')
 		console.log(session)
 	},
 	showMenu: function() {
@@ -164,7 +164,7 @@ class Cart {
 	cleanCart() {
 		session.cart.cart_products = []
 		session.cart.total_cart_price = 0
-		session.updateCartDisplay('restart')
+		session.updateCartDisplay()
 	}
 }
 //----------------------------------------------------------------------------------------------------
@@ -425,7 +425,7 @@ class Base {
 		document.querySelector(".qty-s").innerHTML = this.recepy.sugar
 		document.querySelector(".qty-i").innerHTML = this.recepy.ice
 	}
-	updateCartDisplay(action) {
+	updateCartDisplay() {
 		/**
 		 * Printing the product in the list
 		 */
@@ -438,22 +438,23 @@ class Base {
 		this.new_row_size.className = 'l-' + this.cart.cart_products.length
 		this.new_row_price.className = 'l-' + this.cart.cart_products.length
 		
-		if(action==='restart'){
-			this.clean_name = document.querySelector('.cart_products')
-			this.clean_size = document.querySelector('.cart_sizes')
-			this.clean_price = document.querySelector('.cart_price')
-			this.clean_total = document.querySelector(".digit")
-			this.cart_total_title = document.querySelector('.cart_total_title')
-	
+		this.clean_name = document.querySelector('.cart_products')
+		this.clean_size = document.querySelector('.cart_sizes')
+		this.clean_price = document.querySelector('.cart_price')
+		this.clean_total = document.querySelector(".digit")
+		this.cart_total_title = document.querySelector('.cart_total_title')
+
+		if(this.cart.cart_products.length===0){
+
 			this.clean_name.innerHTML = ''
 			this.clean_size.innerHTML = ''
 			this.clean_price.innerHTML = ''
 			this.clean_total.innerHTML = 0
 			this.cart_total_title.innerHTML = 0
-	
-			session.cart.cart_products = []
-			session.cart.total_cart_price = 0
-			functions.saveGame(session)
+
+			this.cart.cart_products = []
+			this.cart.total_cart_price = 0
+			
 		}else{
 			
 			for (let row = 0; row < this.cart.cart_products.length; row++) {
@@ -702,10 +703,10 @@ class Session extends Base {
 		this.engineInitializer()
 		this.declareGameStats('0',100,1,'small',0,0,0,0,0,0,0)
 		if (this.detectSavedGame() === true) {
-			alert('loading')
+			alert('loadin saved game')
 			this.loadSavedGame(savedGame)
 		} else {
-			alert('not-detected')
+			alert('starting a new game')
 			this.startNewGame(user)
 		}
 		/**
