@@ -30,8 +30,7 @@ let functions = {
 	},
 	saveGame: function(session) {
 		localStorage.setItem('save', JSON.stringify(session));
-		alert('saved')
-		console.log(session)
+		console.log('saved')
 	},
 	showMenu: function() {
 		/**
@@ -158,13 +157,14 @@ class Cart {
 			session.user_info.money = session.user_info.money - session.cart.total_cart_price
 		}
 		session.updateInventory(this.lemon_total, this.sugar_total, this.ice_total, this.glass_total, "add")
-		functions.saveGame(session)
 		session.cart.cleanCart()
+		functions.saveGame(session)
 	}
 	cleanCart() {
 		session.cart.cart_products = []
 		session.cart.total_cart_price = 0
 		session.updateCartDisplay()
+		functions.saveGame(session)
 	}
 }
 //----------------------------------------------------------------------------------------------------
@@ -395,9 +395,9 @@ class Base {
 		/**
 		 * Recepy
 		 */
-		this.recepy.sugar = r_lemon
-		this.recepy.ice = r_sugar
-		this.recepy.lemon = r_ice
+		this.recepy.lemon = r_lemon
+		this.recepy.sugar = r_sugar
+		this.recepy.ice = r_ice
 		/**
 		 * Inventory
 		 */
@@ -473,7 +473,7 @@ class Base {
 			
 			}	
 		}
-		//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 	/**
 	 * UPDATE SECTION
 	 */
@@ -481,42 +481,41 @@ class Base {
 	updateRecepy(lemon,sugar,ice,movement){
 		switch (movement) {
 			case 'add':
-				this.recepy.lemon = this.recepy.lemon + lemon
-				this.recepy.sugar = this.recepy.sugar + sugar
-				this.recepy.ice = this.recepy.ice + ice
+				this.lemon = this.recepy.lemon + lemon
+				this.sugar = this.recepy.sugar + sugar
+				this.ice = this.recepy.ice + ice
 				
-				if(this.recepy.lemon>=10) {
-					this.recepy.lemon = 10
+				if(this.lemon>=10) {
+					this.lemon = 10
 				}
-				else if (this.recepy.sugar>=10) {
-					this.recepy.sugar = 10
+				else if (this.sugar>=10) {
+					this.sugar = 10
 				} 
 				else if (this.recepy.ice>=10){
-					this.recepy.ice = 10
+					this.ice = 10
 				}
 				break
 
 			case 'remove':
-				this.recepy.lemon = this.recepy.lemon - lemon
-				this.recepy.sugar = this.recepy.sugar - sugar
-				this.recepy.ice = this.recepy.ice - ice
+				this.lemon = this.recepy.lemon - lemon
+				this.sugar = this.recepy.sugar - sugar
+				this.ice = this.recepy.ice - ice
 
-				if(this.recepy.lemon<=0) {
-					this.recepy.lemon = 0
+				if(this.lemon<=0) {
+					this.lemon = 0
 				}
-				else if (this.recepy.sugar<=0) {
-					this.recepy.sugar = 0
+				else if (this.sugar<=0) {
+					this.sugar = 0
 				} 
-				else if (this.recepy.ice<=0){
-					this.recepy.ice = 0
+				else if (this.ice<=0){
+					this.ice = 0
 				}
 				break
 				
 				default:
 					break
-					
-					
 		}
+		this.recepy = {lemon:this.lemon,sugar:this.sugar,ice:this.ice}
 		this.updateRecepyDisplay()
 	}
 	updateInventory(lemon, sugar, ice, glass, movement) {
@@ -646,6 +645,7 @@ class Base {
 		else {
 			this.new_cart_product = '';
 		}
+		functions.saveGame(session)
 	}
 	recepyListenerSelector(id) {
 		/**
@@ -683,6 +683,7 @@ class Base {
 				functions.showMessage('Error!!!')
 				break
 		}
+		functions.saveGame(session)
 	}
 }
 //----------------------------------------------------------------------------------------------------
@@ -765,10 +766,8 @@ class Session extends Base {
 (function () {
 	function startGame(event) {
 		session = new Session(event.target.value)
-		console.log(session)
 		savedGame = localStorage.getItem('save')
 		savedGame = JSON.parse(savedGame)
-		console.log(savedGame)
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
