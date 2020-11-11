@@ -449,11 +449,7 @@ class Base {
 		/**
 		 * Inventory
 		 */
-		this.inventory.lemon = i_lemon
-		this.inventory.sugar = i_sugar
-		this.inventory.ice = i_ice
-		this.inventory.glass = i_glass
-		/* this.updateInventory(i_lemon, i_sugar, i_ice, i_glass, "add") */
+		this.updateInventory(i_lemon, i_sugar, i_ice, i_glass, "add")
 	}
 	/*
 	 * show Menu function
