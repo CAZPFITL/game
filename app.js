@@ -46,11 +46,11 @@ class Storage {
 	constructor() {
 	}
 	createStorage(lemon,sugar,ice,glasses,alias){
-		this.lemon                                            = lemon
-		this.sugar                                            = sugar
-		this.ice                                              = ice
-		this.glasses                                          = glasses
-		this.alias                                            = alias
+		this.lemon   = lemon
+		this.sugar   = sugar
+		this.ice     = ice
+		this.glasses = glasses
+		this.alias   = alias
 		return [this.lemon,this.sugar,this.ice,this.glasses,this.alias]
 	}
 }
@@ -427,7 +427,7 @@ class Base {
 	/**
 	 * New Game Stats declaration
 	 */
-	declareNewGameStats(user){
+	declareNewGameStats(user,money,date){
 		/**
 		 * User
 		 */
@@ -650,7 +650,8 @@ class Session extends Base{
 		 * Detect a saved game or start a New game
 		 */
  		if(this.detectSavedGame()===true){
-			alert('detected')
+			alert('loading')
+
 			this.loadSavedGame(savedGame)
 		}else {
 			alert('not-detected')
@@ -673,7 +674,7 @@ class Session extends Base{
 		/**
 		 * if a saved game exist return true
 		 **/
-		if(savedGame!==undefined){
+		if(savedGame!==null||savedGame===undefined){
 			return true
 		}else {
 			return false
@@ -684,11 +685,11 @@ class Session extends Base{
 	 * Load saved game process
 	 **/
 	loadSavedGame(savedGame) {
-		this.user_info    = savedGame.user_info
+		this.declareNewGameStats(savedGame.user_info.user,savedGame.user_info.money,savedGame.user_info.date)
+		this.updateSessionStorage(savedGame.storage.alias)
 		this.storage      = savedGame.storage
 		this.recepy       = savedGame.recepy
 		this.inventory    = savedGame.inventory
-		this.cart         = savedGame.cart
 		this.products     = savedGame.products
 		this.storages     = savedGame.storages
 		this.clients_array= savedGame.clients_array
@@ -697,7 +698,7 @@ class Session extends Base{
 	}
 
 	startNewGame(user) {
-		this.declareNewGameStats(user)
+		this.declareNewGameStats(user,100,1)
 		this.updateSessionStorage(this.user_info.storageSize)
 		this.showMenu()
 		this.updateBar()
@@ -712,6 +713,9 @@ class Session extends Base{
 	function startGame(event) {
 		session = new Session(event.target.value)
 		console.log(session)
+		savedGame = localStorage.getItem('save')
+		savedGame = JSON.parse(savedGame)
+		console.log(savedGame)
 	}
 	document.querySelector(".begin").addEventListener('click', startGame)
 	document.querySelector(".name").addEventListener('change', startGame)
