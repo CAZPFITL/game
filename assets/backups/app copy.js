@@ -478,6 +478,8 @@ class Base {
 	 * UPDATE SECTION
 	 */
 	//------------------------------------------------------------------------------------------------
+	updateScreen() {}
+	
 	updateRecepy(lemon,sugar,ice,movement){
 		switch (movement) {
 			case 'add':
@@ -713,9 +715,7 @@ class Session extends Base {
 		 * ----------------------------------------------------
 		 */
 		functions.showMenu()
-		this.updateBarDisplay()
-		this.updateRecepyDisplay()
-		this.updateCartDisplay()
+		this.updateScreen()
 	}
 
 	/*-----------------------------
