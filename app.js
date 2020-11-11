@@ -1,48 +1,64 @@
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Game variables declaration
+ * GAME VARIABLES
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 let session
 let savedGame
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Game global Functions declaration
+ * FUNCTIONS
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 let functions = {
-	anyNumber: function (number) {
+	anyNumber: function(number) {
 		return Math.floor(Math.random() * Math.floor(number))
 	},
-	hideObject: function (object) {
+	hideObject: function(object) {
 		object = object.classList.add("hide")
 
 	},
-	showObject: function (object) {
+	showObject: function(object) {
 		object = object.classList.remove("hide")
 	},
-	showMessage: function (message) {
+	showMessage: function(message) {
 		document.querySelector(".note-wrapper").classList.remove("hide")
 		document.querySelector(".note-message").innerHTML = message
 	},
-	closeMessage: function () {
+	closeMessage: function() {
 		document.querySelector(".note-wrapper").classList.add("hide")
 	},
-	saveGame: function (session) {
+	saveGame: function(session) {
 		localStorage.setItem('save', JSON.stringify(session));
 		console.log('saved')
 		console.log(session)
+	},
+	showMenu: function() {
+		/**
+		 * Update newGame-Menu Displays
+		 */
+		functions.showObject(document.querySelector("#username"))
+		document.querySelector(".startup").classList.remove("startup")
+
+		functions.showObject(document.querySelector(".stats"))
+		functions.showObject(document.querySelector(".display-menu"))
+		functions.hideObject(document.querySelector(".display-start"))
 	}
 }
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Classes Declared on Base
+ * CLASS: USER INFO
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 class UserInfo {
 	constructor() {
 	}
 }
+//----------------------------------------------------------------------------------------------------
+/**
+ * CLASS: STORAGE
+ */
+//----------------------------------------------------------------------------------------------------
 class Storage {
 	constructor() {
 	}
@@ -55,12 +71,20 @@ class Storage {
 		return [this.lemon, this.sugar, this.ice, this.glasses, this.alias]
 	}
 }
-
+//----------------------------------------------------------------------------------------------------
+/**
+ * CLASS: RECEPY
+ */
+//----------------------------------------------------------------------------------------------------
 class Recepy {
 	constructor() {
 	}
 }
-
+//----------------------------------------------------------------------------------------------------
+/**
+ * CLASS: PRODUCT
+ */
+//----------------------------------------------------------------------------------------------------
 class Product {
 	constructor(name, size, price, alias) {
 		this.name = name
@@ -76,132 +100,30 @@ class Product {
 		return [this.name, this.size, this.price, this.alias]
 	}
 }
-
+//----------------------------------------------------------------------------------------------------
+/**
+ * CLASS: INVENTORY
+ */
+//----------------------------------------------------------------------------------------------------
 class Inventory {
 	constructor() {
 	}
 }
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Game Cart
+ * CLASS: CART
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 class Cart {
 	constructor() {
 		this.cart_products = []
 		this.total_cart_price = 0
 	}
-	processProduct(id) {
-		this.session = session
-		/**
-		  * Get id from the event (Process Call)
-		  **/
-		this.event = event.target.id
-		/**
-		  * Get selection information ingredient, command and qty in screen
-		  **/
-		this.product = this.event.slice(0, 1)
-		this.size = this.event.slice(2)
-		/**
-		  * lemon
-		  **/
-		if (this.product === `l`) {
-			this.product = `lemon`
-			if (this.size === 'small') { this.size = this.session.products[0][1]; this.price = this.session.products[0][2] }
-			if (this.size === 'medium') { this.size = this.session.products[1][1]; this.price = this.session.products[1][2] }
-			if (this.size === 'big') { this.size = this.session.products[2][1]; this.price = this.session.products[2][2] }
-		}
-		/**
-		  * sugar
-		  **/
-		else if (this.product === `s`) {
-			this.product = `sugar`
-			if (this.size === 'small') { this.size = this.session.products[3][1]; this.price = this.session.products[3][2] }
-			if (this.size === 'medium') { this.size = this.session.products[4][1]; this.price = this.session.products[4][2] }
-			if (this.size === 'big') { this.size = this.session.products[5][1]; this.price = this.session.products[5][2] }
-		}
-		/**
-		  * ice
-		  **/
-		else if (this.product === `i`) {
-			this.product = `ice`
-			if (this.size === 'small') { this.size = this.session.products[6][1]; this.price = this.session.products[6][2] }
-			if (this.size === 'medium') { this.size = this.session.products[7][1]; this.price = this.session.products[7][2] }
-			if (this.size === 'big') { this.size = this.session.products[8][1]; this.price = this.session.products[8][2] }
-		}
-		/**
-		  * glasses
-		  **/
-		else if (this.product === `g`) {
-			this.product = `glass`
-			if (this.size === 'small') { this.size = this.session.products[9][1]; this.price = this.session.products[9][2] }
-			if (this.size === 'medium') { this.size = this.session.products[10][1]; this.price = this.session.products[10][2] }
-			if (this.size === 'big') { this.size = this.session.products[11][1]; this.price = this.session.products[11][2] }
-		}
-		/**
-		 * Create product
-		 **/
-		this.new_cart_product = new Product(this.product, this.size, this.price, this.size)
-		/**
-		 * Limit the cart Items
-		 */
-		if (this.session.cart.cart_products.length <= 9) {
-			this.session.cart.pushProduct(this.new_cart_product)
-		}
-		else {
-			this.new_cart_product = '';
-		}
-	}
-	/**
-	 * Push product into cart array
-	 **/
 	pushProduct(product) {
 		this.cart_products.push(product);
 		this.total_cart_price += product.price;
-		/**
-		 * Printing the product in the list
-		 */
-		this.new_row_name = document.createElement('span');
-		this.new_row_size = document.createElement('span');
-		this.new_row_price = document.createElement('span');
-		this.cart_total_title = document.querySelector('.cart_total_title')
-
-		this.new_row_name.className = 'l-' + this.cart_products.length
-		this.new_row_size.className = 'l-' + this.cart_products.length
-		this.new_row_price.className = 'l-' + this.cart_products.length
-
-		this.new_row_name.innerHTML = product.name
-		this.new_row_size.innerHTML = product.size
-		this.new_row_price.innerHTML = product.price
-		this.cart_total_title.innerHTML = this.cart_products.length
-
-		document.querySelector(".digit").innerHTML = ''
-		document.querySelector(".digit").innerHTML = this.total_cart_price
-
-		document.querySelector(".cart_products").appendChild(this.new_row_name);
-		document.querySelector(".cart_sizes").appendChild(this.new_row_size);
-		document.querySelector(".cart_price").appendChild(this.new_row_price);
-		functions.saveGame(session)
+		session.updateCartDisplay()
 	}
-
-	cleanCart() {
-		this.clean_name = document.querySelector('.cart_products')
-		this.clean_size = document.querySelector('.cart_sizes')
-		this.clean_price = document.querySelector('.cart_price')
-		this.clean_total = document.querySelector(".digit")
-		this.cart_total_title = document.querySelector('.cart_total_title')
-
-		this.clean_name.innerHTML = ''
-		this.clean_size.innerHTML = ''
-		this.clean_price.innerHTML = ''
-		this.clean_total.innerHTML = 0
-		this.cart_total_title.innerHTML = 0
-
-		session.cart.cart_products = []
-		session.cart.total_cart_price = 0
-		functions.saveGame(session)
-	}
-
 	buyCart() {
 		this.get_lemon = session.cart.cart_products.filter(item => item.name === "lemon")
 		this.get_sugar = session.cart.cart_products.filter(item => item.name === "sugar")
@@ -239,12 +161,17 @@ class Cart {
 		functions.saveGame(session)
 		session.cart.cleanCart()
 	}
+	cleanCart() {
+		session.cart.cart_products = []
+		session.cart.total_cart_price = 0
+		session.updateCartDisplay('restart')
+	}
 }
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Game Class Base
+ * CLASS: BASE
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 class Base {
 	constructor(name) {
 		/*
@@ -283,9 +210,11 @@ class Base {
 		 * Startup Declarations
 		 */
 	}
+	//------------------------------------------------------------------------------------------------
 	/**
-	 * Start Game Listeners
+	 * DECLARE SECTION
 	 */
+	//------------------------------------------------------------------------------------------------
 	addListeners() {
 		/**
 		 *Lemons
@@ -314,33 +243,30 @@ class Base {
 		/*
 		 *Lemons
 		 */
-		document.querySelector("#l-small").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#l-medium").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#l-big").addEventListener('click', this.cart.processProduct)
+		document.querySelector("#l-small").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#l-medium").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#l-big").addEventListener('click', this.storeListenerSelection)
 		/*
 		 *Sugar
 		 */
-		document.querySelector("#s-small").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#s-medium").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#s-big").addEventListener('click', this.cart.processProduct)
+		document.querySelector("#s-small").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#s-medium").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#s-big").addEventListener('click', this.storeListenerSelection)
 		/*
 		 *Ice
 		 */
-		document.querySelector("#i-small").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#i-medium").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#i-big").addEventListener('click', this.cart.processProduct)
+		document.querySelector("#i-small").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#i-medium").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#i-big").addEventListener('click', this.storeListenerSelection)
 		/*
 		 *Glasses
 		 */
-		document.querySelector("#g-small").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#g-medium").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#g-big").addEventListener('click', this.cart.processProduct)
-		document.querySelector("#g-big").addEventListener('click', this.cart.processProduct)
+		document.querySelector("#g-small").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#g-medium").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#g-big").addEventListener('click', this.storeListenerSelection)
+		document.querySelector("#g-big").addEventListener('click', this.storeListenerSelection)
 		return true
 	}
-	/**
-	 * Products declaration
-	 */
 	declareProducts() {
 		let product = new Product()
 		/**
@@ -410,9 +336,6 @@ class Base {
 		product = null
 		return true
 	}
-	/**
-	 * Storage declaration
-	 */
 	declareStorages() {
 		let storage = new Storage()
 		/*
@@ -426,9 +349,37 @@ class Base {
 		storage = null
 		return true
 	}
-	/**
-	 * New Game Stats declaration
-	 */
+	declareStorageSize(size) {
+		if (size === 'small') {
+			this.storage.lemon = this.storages[0][0]
+			this.storage.sugar = this.storages[0][1]
+			this.storage.ice = this.storages[0][2]
+			this.storage.glass = this.storages[0][3]
+			this.storage.alias = this.storages[0][4]
+		}
+		else if (size === 'medium') {
+			this.storage.lemon = this.storages[1][0]
+			this.storage.sugar = this.storages[1][1]
+			this.storage.ice = this.storages[1][2]
+			this.storage.glass = this.storages[1][3]
+			this.storage.alias = this.storages[1][4]
+		}
+		else if (size === 'big') {
+			this.storage.lemon = this.storages[2][0]
+			this.storage.sugar = this.storages[2][1]
+			this.storage.ice = this.storages[2][2]
+			this.storage.glass = this.storages[2][3]
+			this.storage.alias = this.storages[2][4]
+		}
+		else if (size === 'special') {
+			this.storage.lemon = this.storages[3][0]
+			this.storage.sugar = this.storages[3][1]
+			this.storage.ice = this.storages[3][2]
+			this.storage.glass = this.storages[3][3]
+			this.storage.alias = this.storages[3][4]
+		}
+		return true
+	}
 	declareGameStats(/*USER STATS*/user,money,date,storageSize,/*RECEPY:*/r_lemon,r_sugar,r_ice,/*INVENTORY*/i_lemon,i_sugar,i_ice,i_glass) {
 		/**
 		 * StorageSize
@@ -455,26 +406,12 @@ class Base {
 		this.inventory.ice = i_ice
 		this.inventory.glass = i_glass
 	}
-	/*
-	 * show Menu function
+	//------------------------------------------------------------------------------------------------
+	/**
+	 * DISPLAYS SECTION
 	 */
-	showMenu() {
-		/**
-		 * Update newGame-Menu Displays
-		 */
-		functions.showObject(document.querySelector("#username"))
-		document.querySelector(".startup").classList.remove("startup")
-
-		functions.showObject(document.querySelector(".stats"))
-		functions.showObject(document.querySelector(".display-menu"))
-		functions.hideObject(document.querySelector(".display-start"))
-
-		this.updateBar()
-	}
-	/*
-	 * Update bar
-	 */
-	updateBar() {
+	//------------------------------------------------------------------------------------------------
+	updateBarDisplay() {
 		document.getElementById("Lemons-bar").innerHTML = this.inventory.lemon
 		document.getElementById("Sugar-bar").innerHTML = this.inventory.sugar
 		document.getElementById("Ice-bar").innerHTML = this.inventory.ice
@@ -483,55 +420,65 @@ class Base {
 		document.getElementById("Date-bar").innerHTML = this.user_info.date
 		document.querySelector("#username").innerHTML = this.user_info.user.toUpperCase()
 	}
-	updateRecepyBar() {
-			document.querySelector(".qty-l").innerHTML = this.recepy.lemon
-			document.querySelector(".qty-s").innerHTML = this.recepy.sugar
-			document.querySelector(".qty-i").innerHTML = this.recepy.ice
+	updateRecepyDisplay() {
+		document.querySelector(".qty-l").innerHTML = this.recepy.lemon
+		document.querySelector(".qty-s").innerHTML = this.recepy.sugar
+		document.querySelector(".qty-i").innerHTML = this.recepy.ice
 	}
-	updateMenu() {
-
-	}
-	/**
-	 * Recepy Selector
-	 */
-	recepyListenerSelector(id) {
+	updateCartDisplay(action) {
 		/**
-		 * Get id from the event
+		 * Printing the product in the list
 		 */
-		this.event = target.id
-		this.recepy = session.recepy
-		/**
-		 * Get selection information ingredient, command and qty in screen
-		 */
-		this.selection = this.event.slice(0, -2)
-		this.target = this.event.slice(-1)
-		this.qty = document.querySelector(".qty-" + this.target).innerHTML
-
-		if (this.selection === 'more') {
-			this.operation = 'add'
+		this.new_row_name = document.createElement('span');
+		this.new_row_size = document.createElement('span');
+		this.new_row_price = document.createElement('span');
+		this.cart_total_title = document.querySelector('.cart_total_title')
+		
+		this.new_row_name.className = 'l-' + this.cart.cart_products.length
+		this.new_row_size.className = 'l-' + this.cart.cart_products.length
+		this.new_row_price.className = 'l-' + this.cart.cart_products.length
+		
+		if(action==='restart'){
+			this.clean_name = document.querySelector('.cart_products')
+			this.clean_size = document.querySelector('.cart_sizes')
+			this.clean_price = document.querySelector('.cart_price')
+			this.clean_total = document.querySelector(".digit")
+			this.cart_total_title = document.querySelector('.cart_total_title')
+	
+			this.clean_name.innerHTML = ''
+			this.clean_size.innerHTML = ''
+			this.clean_price.innerHTML = ''
+			this.clean_total.innerHTML = 0
+			this.cart_total_title.innerHTML = 0
+	
+			session.cart.cart_products = []
+			session.cart.total_cart_price = 0
+			functions.saveGame(session)
 		}else{
-			this.operation = 'remove'
+			
+			for (let row = 0; row < this.cart.cart_products.length; row++) {
+				this.new_row_name.innerHTML = this.cart.cart_products[row].name
+				this.new_row_size.innerHTML = this.cart.cart_products[row].size
+				this.new_row_price.innerHTML = this.cart.cart_products[row].price
+				this.cart_total_title.innerHTML = this.cart.cart_products.length
+			}
+			
+			document.querySelector(".digit").innerHTML = ''
+			document.querySelector(".digit").innerHTML = this.cart.total_cart_price
+			
+			document.querySelector(".cart_products").appendChild(this.new_row_name);
+			document.querySelector(".cart_sizes").appendChild(this.new_row_size);
+			document.querySelector(".cart_price").appendChild(this.new_row_price);
+			
+			}	
 		}
-
-		switch (this.target) {
-			case "l":
-				updateRecepy(1,0,0,this.operation)
-				break
-
-			case "s":
-				updateRecepy(0,1,0,this.operation)
-				break
-
-			case "i":
-				updateRecepy(0,0,1,this.operation)
-				break
-
-			default:
-				functions.showMessage('Error!!!')
-				break
-		}
-	}
-
+		//------------------------------------------------------------------------------------------------
+	/**
+	 * UPDATE SECTION
+	 */
+	//------------------------------------------------------------------------------------------------
+	updateScreen() {}
+	
 	updateRecepy(lemon,sugar,ice,movement){
 		switch (movement) {
 			case 'add':
@@ -548,7 +495,6 @@ class Base {
 				else if (this.recepy.ice>=10){
 					this.recepy.ice = 10
 				}
-				this.updateRecepyBar()
 				break
 
 			case 'remove':
@@ -565,18 +511,15 @@ class Base {
 				else if (this.recepy.ice<=0){
 					this.recepy.ice = 0
 				}
-				this.updateRecepyBar()
 				break
-		
-			default:
-				break
-
-
+				
+				default:
+					break
+					
+					
 		}
+		this.updateRecepyDisplay()
 	}
-	/**
-	 * Process any update to the inventory
-	 **/
 	updateInventory(lemon, sugar, ice, glass, movement) {
 		switch (movement) {
 			/**
@@ -636,75 +579,154 @@ class Base {
 				}
 				break
 		}
-		this.updateBar()
+		this.updateBarDisplay()
 
 	}
+	//------------------------------------------------------------------------------------------------
 	/**
-	 * Update Stogare size. used in load and new game and storage upgrade to update the storage size
-	 **/
-	declareStorageSize(size) {
-		if (size === 'small') {
-			this.storage.lemon = this.storages[0][0]
-			this.storage.sugar = this.storages[0][1]
-			this.storage.ice = this.storages[0][2]
-			this.storage.glass = this.storages[0][3]
-			this.storage.alias = this.storages[0][4]
+	 * LISTENERS PROCESSES
+	 */
+	//------------------------------------------------------------------------------------------------
+	storeListenerSelection(id) {
+		this.session = session
+		/**
+		  * Get id from the event (Process Call)
+		  **/
+		this.event = event.target.id
+		/**
+		  * Get selection information ingredient, command and qty in screen
+		  **/
+		this.product = this.event.slice(0, 1)
+		this._size = this.event.slice(2)
+		/**
+		  * lemon
+		  **/
+		if (this.product === `l`) {
+			this.product = `lemon`
+			if (this._size === 'small') { this.size = this.session.products[0][1]; this.price = this.session.products[0][2] }
+			if (this._size === 'medium') { this.size = this.session.products[1][1]; this.price = this.session.products[1][2] }
+			if (this._size === 'big') { this.size = this.session.products[2][1]; this.price = this.session.products[2][2] }
 		}
-		else if (size === 'medium') {
-			this.storage.lemon = this.storages[1][0]
-			this.storage.sugar = this.storages[1][1]
-			this.storage.ice = this.storages[1][2]
-			this.storage.glass = this.storages[1][3]
-			this.storage.alias = this.storages[1][4]
+		/**
+		  * sugar
+		  **/
+		else if (this.product === `s`) {
+			this.product = `sugar`
+			if (this._size === 'small') { this.size = this.session.products[3][1]; this.price = this.session.products[3][2] }
+			if (this._size === 'medium') { this.size = this.session.products[4][1]; this.price = this.session.products[4][2] }
+			if (this._size === 'big') { this.size = this.session.products[5][1]; this.price = this.session.products[5][2] }
 		}
-		else if (size === 'big') {
-			this.storage.lemon = this.storages[2][0]
-			this.storage.sugar = this.storages[2][1]
-			this.storage.ice = this.storages[2][2]
-			this.storage.glass = this.storages[2][3]
-			this.storage.alias = this.storages[2][4]
+		/**
+		  * ice
+		  **/
+		else if (this.product === `i`) {
+			this.product = `ice`
+			if (this._size === 'small') { this.size = this.session.products[6][1]; this.price = this.session.products[6][2] }
+			if (this._size === 'medium') { this.size = this.session.products[7][1]; this.price = this.session.products[7][2] }
+			if (this._size === 'big') { this.size = this.session.products[8][1]; this.price = this.session.products[8][2] }
 		}
-		else if (size === 'special') {
-			this.storage.lemon = this.storages[3][0]
-			this.storage.sugar = this.storages[3][1]
-			this.storage.ice = this.storages[3][2]
-			this.storage.glass = this.storages[3][3]
-			this.storage.alias = this.storages[3][4]
+		/**
+		  * glasses
+		  **/
+		else if (this.product === `g`) {
+			this.product = `glass`
+			if (this._size === 'small') { this.size = this.session.products[9][1]; this.price = this.session.products[9][2] }
+			if (this._size === 'medium') { this.size = this.session.products[10][1]; this.price = this.session.products[10][2] }
+			if (this._size === 'big') { this.size = this.session.products[11][1]; this.price = this.session.products[11][2] }
 		}
-		return true
+		/**
+		 * Create product
+		 **/
+		this.new_cart_product = new Product(this.product, this.size, this.price, this._size)
+		/**
+		 * Limit the cart Items
+		 */
+		if (this.session.cart.cart_products.length <= 9) {
+			this.session.cart.pushProduct(this.new_cart_product)
+		}
+		else {
+			this.new_cart_product = '';
+		}
+	}
+	recepyListenerSelector(id) {
+		/**
+		 * Get id from the event
+		 */
+		this.event = event.target.id
+		this.recepy = session.recepy
+		/**
+		 * Get selection information ingredient, command and qty in screen
+		 */
+		this.selection = this.event.slice(0, -2)
+		this.target = this.event.slice(-1)
+		this.qty = document.querySelector(".qty-" + this.target).innerHTML
+
+		if (this.selection === 'more') {
+			this.operation = 'add'
+		}else{
+			this.operation = 'remove'
+		}
+
+		switch (this.target) {
+			case "l":
+				session.updateRecepy(1,0,0,this.operation)
+				break
+
+			case "s":
+				session.updateRecepy(0,1,0,this.operation)
+				break
+
+			case "i":
+				session.updateRecepy(0,0,1,this.operation)
+				break
+
+			default:
+				functions.showMessage('Error!!!')
+				break
+		}
 	}
 }
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 /**
- * Session Class
+ * CLASS: SESSION
  */
-//----------------------------------------------
+//----------------------------------------------------------------------------------------------------
 class Session extends Base {
 	constructor(user) {
 		super()
 		/**
-		 * Add listeners and declare constants
+		 * ------------------------------------------------------
+		 * STAGE: START
+		 * ------------------------------------------------------
 		 */
 		this.engineInitializer()
-		/**
-		 * Detect a saved game or start a New game
-		 */
+		this.declareGameStats('0',100,1,'small',0,0,0,0,0,0,0)
 		if (this.detectSavedGame() === true) {
 			alert('loading')
-
 			this.loadSavedGame(savedGame)
 		} else {
 			alert('not-detected')
 			this.startNewGame(user)
 		}
+		/**
+		 * ----------------------------------------------------
+		 * STAGE: MENU
+		 * ----------------------------------------------------
+		 */
+		functions.showMenu()
+		this.updateScreen()
 	}
 
+	/*-----------------------------
+	|
+	| STARTUP SECTION
+	|
+	\*-----------------------------*/
 	engineInitializer() {
 		this.addListeners()
 		this.declareProducts()
 		this.declareStorages()
 	}
-
 	detectSavedGame() {
 		savedGame = localStorage.getItem('save')
 		savedGame = JSON.parse(savedGame)
@@ -715,34 +737,22 @@ class Session extends Base {
 			return false
 		}
 	}
-
-	/**
-	 * Load Saved Game Process
-	 **/
 	loadSavedGame(savedGame) {
-		this.a = savedGame.user_info.user,
-		this.b = savedGame.user_info.money,
-		this.c = savedGame.user_info.date,
-		this.d = savedGame.user_info.storageSize,
-		this.e = savedGame.recepy.lemon,
-		this.f = savedGame.recepy.sugar,
-		this.g = savedGame.recepy.ice,
-		this.h = savedGame.inventory.lemon,
-		this.i = savedGame.inventory.sugar,
-		this.j = savedGame.inventory.ice,
-		this.k = savedGame.inventory.glass
-		this.cart.cart_products = savedGame.cart.cart_products
-
-		this.declareGameStats('0',100,1,'small',0,0,0,0,0,0,0)
-		this.declareGameStats(this.a,this.b,this.c,this.d,this.e,this.f,this.g,this.h,this.i,this.j,this.k)
-		this.showMenu()
+		let a = savedGame.user_info.user
+		let b = savedGame.user_info.money
+		let c = savedGame.user_info.date
+		let d = savedGame.user_info.storageSize
+		let e = savedGame.recepy.lemon
+		let f = savedGame.recepy.sugar
+		let g = savedGame.recepy.ice
+		let h = savedGame.inventory.lemon
+		let i = savedGame.inventory.sugar
+		let j = savedGame.inventory.ice
+		let k = savedGame.inventory.glass
+		this.declareGameStats(a,b,c,d,e,f,g,h,i,j,k)
 	}
-	/**
-	 * Start New Game Process
-	 */
 	startNewGame(user) {
 		this.declareGameStats(user,/* (MONEY:*/100,/*) (DATE:*/1,/*) (STORAGE SIZE:*/'small',/*) (RECEPY:Lemons:*/0,/*sugar:*/0,/*ice:*/0, 0, 0, 0, 0)
-		this.showMenu()
 	}
 }
 
