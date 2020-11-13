@@ -702,10 +702,8 @@ class Session extends Base {
 		this.engineInitializer()
 		this.declareGameStats('0',100,1,'small',0,0,0,0,0,0,0)
 		if (this.detectSavedGame() === true) {
-			alert('loadin saved game')
 			this.loadSavedGame(savedGame)
 		} else {
-			alert('starting a new game')
 			this.startNewGame(user)
 		}
 		/**
